@@ -5,7 +5,6 @@ import actions from "./actions";
 import state from "@/store/state";
 import mutations from "@/store/mutations";
 
-
 export default createStore({
   state,
   actions,

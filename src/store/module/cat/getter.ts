@@ -1,7 +1,5 @@
 /*
-*  Cat_getter
-* */
+ *  Cat_getter
+ * */
 
-export default {
-
-}
+export default {};

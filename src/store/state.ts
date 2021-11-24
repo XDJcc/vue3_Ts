@@ -1,12 +1,13 @@
 /*
-*  master_state
-* */
+ *  master_state
+ * */
 
-type Istate  = {
-  name:string
-}
-const state:Istate = {
-  name:''
-}
+type Istate = {
+  name: string;
+};
 
-export default state
+const state: Istate = {
+  name: "李四",
+};
+
+export default state;

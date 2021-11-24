@@ -1,7 +1,5 @@
 /*
-*  Cat_action
-* */
+ *  Cat_action
+ * */
 
-export default {
-
-}
+export default {};

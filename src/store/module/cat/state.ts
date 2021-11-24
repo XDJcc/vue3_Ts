@@ -1,7 +1,5 @@
 /*
-*  Cat_state
-* */
+ *  Cat_state
+ * */
 
-export default {
-
-}
+export default {};

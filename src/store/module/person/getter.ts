@@ -1,7 +1,5 @@
 /*
-*  Person_getter
-* */
+ *  Person_getter
+ * */
 
-export default {
-
-}
+export default {};

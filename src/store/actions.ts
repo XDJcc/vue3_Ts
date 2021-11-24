@@ -8,7 +8,7 @@ import { UPDATE_NAME } from "./type";
 const actions = {
   updateName({ commit }: { commit: Commit }, data: string) {
     setTimeout(() => {
-      commit(UPDATE_NAME, data);
+      commit(UPDATE_NAME, { data });
     }, 0);
   },
 };

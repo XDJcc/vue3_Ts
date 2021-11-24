@@ -1,7 +1,5 @@
 /*
-*  Cat_mutations
-* */
+ *  Cat_mutations
+ * */
 
-export default {
-
-}
+export default {};

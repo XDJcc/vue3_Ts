@@ -1,8 +1,10 @@
 /*
  * 第一次项目文件
  * */
+import {RouteRecordRaw } from "vue-router";
 
-const remainRouter = [
+
+const remainRouter:Array<RouteRecordRaw> = [
   {
     path: "/first",
     redirect: "/first/myName",

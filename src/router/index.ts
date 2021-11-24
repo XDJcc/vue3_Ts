@@ -7,6 +7,8 @@ import {
 
 import routes from "./routers";
 
+import {recAllRoute} from "@/untils";
+
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
@@ -14,6 +16,7 @@ const router = createRouter({
 
 // 路由白名单（暂时未使用）
 const whiteList = ["/login"];
+const routeList = recAllRoute(routes)
 
 //路由守卫
 router.beforeResolve(

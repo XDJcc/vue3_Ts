@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 import HelloWorld from "@/components/HelloWorld.vue";
 
 export default defineComponent({
@@ -15,6 +15,6 @@ export default defineComponent({
 <template>
   <div class="home">
     <h1>This is an home page</h1>
-    <HelloWorld />
+    <HelloWorld msg="天上人间" />
   </div>
 </template>
