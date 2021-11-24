@@ -1,26 +1,44 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Home from "../views/Home.vue";
+import {
+  createRouter,
+  createWebHistory,
+  NavigationGuardNext,
+  RouteLocationNormalized,
+} from "vue-router";
 
-const routes: Array<RouteRecordRaw> = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
-];
+import routes from "./routers";
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+// 路由白名单（暂时未使用）
+const whiteList = ["/login"];
+
+//路由守卫
+router.beforeResolve(
+  (
+    to: RouteLocationNormalized,
+    _from: RouteLocationNormalized,
+    next: NavigationGuardNext
+  ) => {
+
+    //路由自动回退
+    // if (!JSON.stringify(routes).includes(to.path)) {
+    //   next({path:_from.path});
+    // }
+
+    if (to.path !== "/login") {
+      if (whiteList.indexOf(to.path) !== -1) {
+        next();
+      } else {
+        // next({ path: "/login" });
+        next();
+      }
+    } else {
+      next();
+    }
+  }
+);
 
 export default router;

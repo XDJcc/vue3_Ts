@@ -1,8 +1,39 @@
+<script setup lang="ts">
+import { ref, watchEffect } from "vue";
+import { useRouter, useRoute, RouteRecordRaw } from "vue-router";
+import * as routerList from "@/router/routers";
+
+//获取路由实例
+const router = useRouter();
+
+//获取路由参数
+const route = useRoute();
+
+//获取所有一级路由
+const routeList: Array<string> = routerList.default.map(
+  (item: RouteRecordRaw, index: number): string => {
+    return item.name as string;
+  }
+);
+
+//是否显示左上角的回到首页
+const showHome = ref<boolean>(true);
+
+//返回到首页
+const goHome = (): void => {
+  router.push({ path: "/" });
+};
+
+watchEffect((): void => {
+  // console.log("route.name => :", route.name);
+  showHome.value = !routeList.includes(route.name as string);
+});
+</script>
+
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
+  <el-affix :offset="20" v-show="showHome" class="goHome">
+    <el-button type="primary" @click="goHome"></el-button>
+  </el-affix>
   <router-view />
 </template>
 
@@ -11,10 +42,14 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 
+.goHome {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+}
 #nav {
   padding: 30px;
 
