@@ -1,10 +1,9 @@
 /*
  * 第一次项目文件
  * */
-import {RouteRecordRaw } from "vue-router";
+import { RouteRecordRaw } from "vue-router";
 
-
-const remainRouter:Array<RouteRecordRaw> = [
+const remainRouter: Array<RouteRecordRaw> = [
   {
     path: "/first",
     redirect: "/first/myName",
@@ -15,7 +14,7 @@ const remainRouter:Array<RouteRecordRaw> = [
         path: "myName",
         name: "MyName",
         component: () => import("@/components/MyName.vue"),
-        redirect:'/first/myName/thirdRoute1',
+        redirect: "/first/myName/thirdRoute1",
         children: [
           {
             path: "thirdRoute1",

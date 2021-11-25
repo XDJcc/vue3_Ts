@@ -4,7 +4,7 @@
 
 import { RouteRecordRaw } from "vue-router";
 
-const homeRouter:Array<RouteRecordRaw> = [
+const homeRouter: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "Home",

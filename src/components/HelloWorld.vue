@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import { withDefaults } from "vue";
 
@@ -9,9 +8,16 @@ const props = withDefaults(defineProps<{ msg: string }>(), {
 
 <template>
   <div class="hello">
-    <h1>{{msg}}</h1>
-    <el-button type="primary" @click="$router.push('/first/myName')">查看我的信息</el-button>
-    <el-button type="primary" @click="$router.push('/test')">查看我的信息</el-button>
+    <h1>{{ msg }}</h1>
+    <el-button type="primary" @click="$router.push('/first/myName')"
+      >查看我的信息</el-button
+    >
+    <el-button type="primary" @click="$router.push('/test')"
+      >查看我的信息</el-button
+    >
+    <el-button type="primary" @click="$router.push('/score')"
+      >贪吃蛇</el-button
+    >
   </div>
 </template>
 
