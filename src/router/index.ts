@@ -7,7 +7,7 @@ import {
 
 import routes from "./routers";
 
-import {recAllRoute} from "@/untils";
+import {recAllRoute} from "@/utils/tools";
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

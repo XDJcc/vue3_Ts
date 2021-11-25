@@ -2,7 +2,7 @@
 import { ref, watchEffect } from "vue";
 import { useRouter, useRoute, RouteRecordRaw } from "vue-router";
 import  routerList from "@/router/routers";
-import {recAllRoute} from "@/untils";
+import {recAllRoute} from "@/utils/tools";
 
 //获取路由实例
 const router = useRouter();
