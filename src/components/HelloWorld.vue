@@ -1,23 +1,25 @@
 <script setup lang="ts">
-import { withDefaults } from "vue";
+import { withDefaults, ref } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
-const props = withDefaults(defineProps<{ msg: string }>(), {
+let props = withDefaults(defineProps<{ msg: string }>(), {
   msg: "我是谢大脚",
 });
+
+const sayName = ref<string>(props.msg + "，我是张三的好朋友");
 </script>
 
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <el-button type="primary" @click="$router.push('/first/myName')"
+    <h1>{{ sayName }}</h1>
+    <el-button type="primary" @click="router.push('/first/myName')"
       >查看我的信息</el-button
     >
-    <el-button type="primary" @click="$router.push('/test')"
+    <el-button type="primary" @click="router.push('/test')"
       >查看我的信息</el-button
     >
-    <el-button type="primary" @click="$router.push('/score')"
-      >贪吃蛇</el-button
-    >
+    <el-button type="primary" @click="router.push('/score')">贪吃蛇</el-button>
   </div>
 </template>
 

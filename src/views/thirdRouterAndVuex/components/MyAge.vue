@@ -6,7 +6,7 @@ const myAge = ref<string>("张三今天是18岁生日");
 <template>
   <el-row>
     <el-col :spam="6">
-      {{myAge}}
+      {{ myAge }}
     </el-col>
   </el-row>
 </template>

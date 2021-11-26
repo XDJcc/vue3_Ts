@@ -2,7 +2,7 @@
 
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <h1>三级路由和vuex测试</h1>
     <router-view></router-view>
   </div>
 </template>

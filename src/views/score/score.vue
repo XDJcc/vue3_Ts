@@ -1,12 +1,27 @@
 <script setup lang="ts">
 import GameControl from "@/views/score/index";
-import { onMounted } from "vue";
+import { inject, nextTick, onMounted } from "vue";
+
 onMounted(() => {
-  new GameControl();
+  init();
 });
+const init = async (): void => {
+  await nextTick();
+  gameProto = new GameControl();
+};
+
+let gameProto: unknown = null;
+const isLoadNowDom = inject("isLoadNowDom");
+
+//开始新游戏
+const openNewGame = (): void => {
+  gameProto.isLive = false; //停止移动
+  isLoadNowDom();
+};
 </script>
 <template>
   <div class="container">
+    <el-button type="primary" @click="openNewGame">重新开始</el-button>
     <!--创建游戏的主容器-->
     <div class="main">
       <!--设置游戏的舞台-->
@@ -16,7 +31,7 @@ onMounted(() => {
           <!--snake内部的div 表示蛇的各部分-->
           <p id="foot" class="foot"></p>
           <div class="xx"></div>
-          <div ></div>
+          <div></div>
           <!--设置食物-->
         </div>
       </div>
@@ -38,6 +53,7 @@ $bg-color: #b7d4a8;
   box-sizing: border-box;
   overflow: hidden;
 }
+
 //设置主窗口的样式
 .main {
   width: 360px;

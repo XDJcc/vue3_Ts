@@ -7,7 +7,7 @@ import {
 
 import routes from "./routers";
 
-import {recAllRoute} from "@/utils/tools";
+import { recAllRoute } from "@/utils/tools";
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -16,7 +16,7 @@ const router = createRouter({
 
 // 路由白名单（暂时未使用）
 const whiteList = ["/login"];
-const routeList = recAllRoute(routes)
+const routeList = recAllRoute(routes);
 
 //路由守卫
 router.beforeResolve(
@@ -25,7 +25,6 @@ router.beforeResolve(
     _from: RouteLocationNormalized,
     next: NavigationGuardNext
   ) => {
-
     //路由自动回退
     // if (!JSON.stringify(routes).includes(to.path)) {
     //   next({path:_from.path});

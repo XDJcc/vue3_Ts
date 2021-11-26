@@ -1,6 +1,5 @@
 //食物构造器
 import { ElMessage } from "element-plus";
-import { render } from "vue";
 
 class Foot {
   element: HTMLElement;
@@ -35,6 +34,7 @@ class ScorePanel {
 
   maxLevel: number;
   upScore: number;
+
   constructor(maxLevel = 10, upScore = 10) {
     this.scoreEle = document.getElementById("scoreEle");
     this.levelEle = document.getElementById("levelEle");
@@ -54,6 +54,7 @@ class ScorePanel {
     this.levelEle.innerHTML = "Level:" + ++this.level + "";
   }
 }
+
 /*
  *  蛇
  * */
@@ -64,13 +65,14 @@ class Snake {
 
   constructor() {
     this.element = document.getElementById("snake");
-    this.head = document.getElementById("snake").getElementsByTagName("div")[0];
+    this.head = this.element.querySelector("div");
     this.bodies = this.element.getElementsByTagName("div");
   }
 
   get x() {
     return this.head.offsetLeft;
   }
+
   set x(value: number) {
     if (this.x == value) return;
     //限制范围
@@ -89,6 +91,7 @@ class Snake {
     this.head.style.left = value + "px";
     this.checkHeadBody();
   }
+
   get y() {
     return this.head.offsetTop;
   }
@@ -150,9 +153,10 @@ export default class GameControl {
   constructor() {
     this.snake = new Snake();
     this.foot = new Foot();
-    this.scorePanel = new ScorePanel(100,1);
+    this.scorePanel = new ScorePanel(100, 1);
     this.init();
   }
+
   //初始化游戏
   private init() {
     document.addEventListener("keydown", this.keyDownHandler);
@@ -164,14 +168,14 @@ export default class GameControl {
   };
 
   //开始移动 的方向
-  run() {
+  run(): void {
     let x = this.snake.x;
     let y = this.snake.y;
 
     switch (this.direction) {
       case "ArrowUp":
       case "Up":
-        y -= 10 ;
+        y -= 10;
         break;
       case "ArrowDown":
       case "Down":
@@ -198,11 +202,11 @@ export default class GameControl {
       this.isLive = false;
     }
     this.isLive &&
-      setTimeout(this.run.bind(this), 300 - (this.scorePanel.level - 1) * 30);
+    setTimeout(this.run.bind(this), 300 - (this.scorePanel.level - 1) * 30);
   }
 
   //  是否吃到食物
-  checkEat(x: number, y: number) {
+  checkEat(x: number, y: number): void {
     if (x === this.foot.x && y === this.foot.y) {
       this.foot.change();
       this.scorePanel.addSore();

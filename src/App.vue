@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watchEffect } from "vue";
+import { ref, watchEffect, nextTick, provide } from "vue";
 import { useRouter, useRoute, RouteRecordRaw } from "vue-router";
 import routerList from "@/router/routers";
 import { recAllRoute } from "@/utils/tools";
@@ -13,6 +13,7 @@ const route = useRoute();
 //获取所有路由 的 name
 const routeList: Array<string> = recAllRoute(routerList);
 // console.log('routeList => :',routeList);
+import Home from "@/views/Home.vue";
 
 //是否显示左上角的回到首页
 const showHome = ref<boolean>(true);
@@ -21,6 +22,15 @@ const showHome = ref<boolean>(true);
 const goHome = (): void => {
   router.push({ path: "/" });
 };
+
+const isLoad = ref<boolean>(true);
+console.log("isLoad=>:", isLoad);
+const isLoadNowDom = async (): void => {
+  isLoad.value = false;
+  await nextTick();
+  isLoad.value = true;
+};
+provide("isLoadNowDom", isLoadNowDom);
 
 watchEffect((): void => {
   // console.log("route.name => :", route.name);
@@ -32,7 +42,12 @@ watchEffect((): void => {
   <el-affix :offset="20" v-show="showHome" class="goHome">
     <el-button type="primary" @click="goHome"></el-button>
   </el-affix>
-  <router-view class="view" />
+  <div class="app">
+    <Home class="nav_List"></Home>
+    <div class="view">
+      <router-view v-if="isLoad" />
+    </div>
+  </div>
 </template>
 
 <style lang="scss">
@@ -48,15 +63,34 @@ watchEffect((): void => {
   right: 20px;
   bottom: 20px;
 }
-*{
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+
+  .nav_List {
+    width: 20vw;
+    height: 100%;
+  }
+
+  .view {
+    width: 80vw;
+    height: 100%;
+  }
+}
+
+
+//贪吃蛇继承 样式
+* {
   margin: 0;
   padding: 0;
 }
-.view{
-  width: 100vw;
-  height:100vh ;
-}
-.xx{
+
+
+.xx {
   width: 10px !important;
   height: 10px !important;
   border: 1px solid #b7d4a8 !important;

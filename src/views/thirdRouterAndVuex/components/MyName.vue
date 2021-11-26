@@ -32,9 +32,9 @@ export default defineComponent({
     </el-col>
   </el-row>
 
-  <router-link :to="{name:'ThirdRoute1'}">ThirdRoute1</router-link>
+  <router-link :to="{ name: 'ThirdRoute1' }">ThirdRoute1</router-link>
   |
-  <router-link :to="{name:'ThirdRoute2'}">ThirdRoute2</router-link>
+  <router-link :to="{ name: 'ThirdRoute2' }">ThirdRoute2</router-link>
   <router-view></router-view>
 </template>
 <style scoped lang="scss"></style>
