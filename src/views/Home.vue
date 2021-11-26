@@ -18,7 +18,7 @@ const handleClose = (key, keyPath): void => {
         active-text-color="#ffd04b"
         background-color="#545c64"
         class="el-menu-vertical-demo"
-        default-active="2"
+        default-active="1"
         text-color="#fff"
         router
         unique-opened
@@ -28,14 +28,16 @@ const handleClose = (key, keyPath): void => {
         <el-menu-item index="/main">
           <span>XDJcc</span>
         </el-menu-item>
-        <el-sub-menu index="">
+        <el-sub-menu index="1">
           <template #title> Navigator Two</template>
-          <el-menu-item index="/first">item one</el-menu-item>
+          <el-menu-item index="1-1">item one</el-menu-item>
           <el-menu-item index="1-2">item one</el-menu-item>
           <el-menu-item index="1-3">item three</el-menu-item>
           <el-sub-menu index="1-4">
             <template #title>item four</template>
-            <el-menu-item index="1-4-1">item one</el-menu-item>
+            <el-menu-item index="1-4-1">four one</el-menu-item>
+            <el-menu-item index="1-4-2">four two</el-menu-item>
+            <el-menu-item index="1-4-3">four three</el-menu-item>
           </el-sub-menu>
         </el-sub-menu>
         <el-menu-item index="/score">
