@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watchEffect, nextTick, provide } from "vue";
-import { useRouter, useRoute, RouteRecordRaw } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import routerList from "@/router/routers";
 import { recAllRoute } from "@/utils/tools";
 
@@ -45,6 +45,7 @@ watchEffect((): void => {
   <div class="app">
     <Home class="nav_List"></Home>
     <div class="view">
+      <el-icon><briefcase /></el-icon>
       <router-view v-if="isLoad" />
     </div>
   </div>
@@ -82,14 +83,11 @@ watchEffect((): void => {
   }
 }
 
-
 //贪吃蛇继承 样式
 * {
   margin: 0;
   padding: 0;
 }
-
-
 .xx {
   width: 10px !important;
   height: 10px !important;
