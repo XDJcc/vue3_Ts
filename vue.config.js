@@ -1,4 +1,5 @@
 // vue.config.js
+
 let version = "";
 (function () {
   const d = new Date();

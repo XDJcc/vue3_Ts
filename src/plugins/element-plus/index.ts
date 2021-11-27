@@ -55,6 +55,8 @@ import {
   ArrowDown,
   Close,
   CloseBold,
+  BellFilled,
+  Briefcase,
 } from "@element-plus/icons";
 
 const components = [
@@ -110,11 +112,13 @@ const components = [
   ArrowDown,
   Close,
   CloseBold,
+  BellFilled,
+  Briefcase,
 ];
 
 const plugins = [ElLoading];
 
-export function useElementPlus(app: App):void {
+export function useElementPlus(app: App): void {
   components.forEach((component: Component) => {
     app.component(component.name, component);
   });
