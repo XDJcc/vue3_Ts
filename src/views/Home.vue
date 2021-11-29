@@ -36,7 +36,9 @@ const handleClose = (key, keyPath): void => {
           <el-sub-menu index="1-4">
             <template #title>
               <div>
-                <el-icon><document /></el-icon>
+                <el-icon>
+                  <document />
+                </el-icon>
                 item four
               </div>
             </template>
@@ -48,6 +50,10 @@ const handleClose = (key, keyPath): void => {
         <el-menu-item index="/score">
           <span>贪吃蛇</span>
         </el-menu-item>
+        <el-sub-menu index="/">
+          <template #title>Cloud_Music</template>
+          <el-menu-item index="/cloud"><span>搜索音乐</span></el-menu-item>
+        </el-sub-menu>
         <el-menu-item index="/test">
           <span>testDemo</span>
         </el-menu-item>

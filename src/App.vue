@@ -46,7 +46,6 @@ watchEffect((): void => {
   <div class="app">
     <Home class="nav_List"></Home>
     <div class="view">
-      <el-icon><briefcase /></el-icon>
       <router-view v-if="isLoad" />
     </div>
   </div>
@@ -83,7 +82,8 @@ watchEffect((): void => {
     height: 100%;
     padding: 20px;
     box-sizing: border-box;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x:hidden;
   }
 }
 

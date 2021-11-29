@@ -11,7 +11,19 @@ export async function searchMusic(params: {
   return await http.get(`/api/search`, params);
 }
 /*
- * 获取音乐
+ * 获取音乐详情
+ * @Params: {ids} : 音乐ID
+ * */
+
+export async function searchMusicDetail(params: {
+  keywords: string;
+}): Promise<unknown> {
+  return await http.get(`/api/song/detail`, params);
+}
+
+
+/*
+ * 获取音乐  -- 暂不可用
  * @Params: {id} : 音乐的ID
  * */
 

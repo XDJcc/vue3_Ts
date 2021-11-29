@@ -21,7 +21,11 @@ const openNewGame = (): void => {
 </script>
 <template>
   <div class="container">
-    <el-button type="primary" @click="openNewGame">重新开始</el-button>
+    <el-row type="flex" justify="center">
+      <el-col :span="1" >
+        <el-button type="primary" @click="openNewGame">重新开始</el-button>
+      </el-col>
+    </el-row>
     <!--创建游戏的主容器-->
     <div class="main">
       <!--设置游戏的舞台-->

@@ -12,11 +12,15 @@ import testModule from "./modules/testDemo/testDemo";
 //score demo
 import scoreRouter from "./modules/score/score";
 
+//score demo
+import cloudRouter from "./modules/cloudMusic/cloudMusic";
+
 const routes: Array<RouteRecordRaw> = [
   ...firstModule,
   ...homeRouter,
   ...testModule,
   ...scoreRouter,
+  ...cloudRouter,
 ];
 
 export default routes;

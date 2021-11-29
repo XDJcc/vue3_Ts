@@ -14,3 +14,26 @@ export const recAllRoute = function (
   }
   return routeList;
 };
+
+
+export function fliterTime(time = 0): string {
+  const timer = new Date(parseInt(time / 1000 +'') );
+
+  const year = timer.getFullYear(); //年
+  const month = timer.getMonth() + 1; //月
+  const day = timer.getDate(); //日
+
+  const hh = timer.getHours(); //时
+  const mm = timer.getMinutes(); //分
+
+  let clock = year + "-";
+  if (month < 10) clock += "0";
+  clock += month + "-";
+  if (day < 10) clock += "0";
+  clock += day + " ";
+  if (hh < 10) clock += "0";
+  clock += hh + ":";
+  if (mm < 10) clock += "0";
+  clock += mm;
+  return clock;
+}

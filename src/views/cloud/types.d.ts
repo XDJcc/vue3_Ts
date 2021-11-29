@@ -1,12 +1,10 @@
-
-
 //接口返回的数据类型
 export type Rows<T> = {
   result: Result<T>;
   code: number;
 };
 
-declare type Result<T> = {
+type Result<T> = {
   hasMore: boolean;
   songCount: number;
   songs: Array<T>;
@@ -52,3 +50,4 @@ type artist = {
   picUrl: string;
   trans: string | number;
 };
+
