@@ -34,7 +34,12 @@ const handleClose = (key, keyPath): void => {
           <el-menu-item index="1-2">item one</el-menu-item>
           <el-menu-item index="1-3">item three</el-menu-item>
           <el-sub-menu index="1-4">
-            <template #title> <el-icon><document /></el-icon>item four</template>
+            <template #title>
+              <div>
+                <el-icon><document /></el-icon>
+                item four
+              </div>
+            </template>
             <el-menu-item index="1-4-1">four one</el-menu-item>
             <el-menu-item index="1-4-2">four two</el-menu-item>
             <el-menu-item index="1-4-3">four three</el-menu-item>

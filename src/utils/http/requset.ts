@@ -3,12 +3,9 @@ import Axios, {
   AxiosResponse,
   AxiosError,
   AxiosInstance,
-  Method,
 } from "axios";
 import Qs from "qs";
 import { ElMessage } from "element-plus";
-import base from "./base";
-
 
 const message = (msg: string, type?: any) => {
   ElMessage({
@@ -19,7 +16,6 @@ const message = (msg: string, type?: any) => {
 };
 
 class EnclosureHttp {
-
   constructor() {
     this.httpInterceptorsRequest();
     this.httpInterceptorsResponse();
@@ -109,7 +105,7 @@ class EnclosureHttp {
    * @param {string} url 路径
    * @param {object} params 参数
    */
-  public get = (url: string, params?: object) => {
+  public get = (url: string, params?:any) => {
     return new Promise((resolve, reject) => {
       Axios.get(url, { params }).then(
         (res) => {
@@ -127,7 +123,7 @@ class EnclosureHttp {
    * @param {string} url 路径
    * @param {object} params 参数
    */
-   public post = (url: string, params?: object) => {
+  public post = (url: string, params?:any) => {
     return new Promise((resolve, reject) => {
       Axios.post(url, Qs.stringify(params))
         .then((res) => {

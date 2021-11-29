@@ -19,4 +19,16 @@ module.exports = {
   assetsDir: `./${version}`, //打包编译后的静态资源所在的目录位置
   indexPath: "index.html", //生成的index.html 文件所在的位置
   filenameHashing: true, //静态文件文件名哈希
+  devServer: {
+    host: "192.168.110.77",
+    port: 8080,
+    proxy: {
+      "/api": {
+        target: "https://autumnfish.cn/", //要请求的域名
+        pathRewrite: { "^/api": "/" }, //通过pathRewrite重写地址，将前缀/api转为/
+        ws: true,
+        changeOrigin: true, //开启代理：在本地会创建一个虚拟服务端，然后发送请求的数据，并同时接收请求的数据，这样服务端和服务端进行数据的交互就不会有跨域问题
+      },
+    },
+  },
 };

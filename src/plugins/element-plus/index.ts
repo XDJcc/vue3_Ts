@@ -56,7 +56,7 @@ import {
   Close,
   CloseBold,
   BellFilled,
-  Briefcase,
+  Briefcase, Chicken
 } from "@element-plus/icons";
 
 const components = [
@@ -114,6 +114,7 @@ const components = [
   CloseBold,
   BellFilled,
   Briefcase,
+  Chicken,
 ];
 
 const plugins = [ElLoading];
