@@ -5,7 +5,9 @@ import http from "@/utils/http";
  * @Params: {keywords} : 关键字
  * */
 
-export async function searchMusic(params:{keywords:string}) {
+export async function searchMusic(params: {
+  keywords: string;
+}): Promise<unknown> {
   return await http.get(`/api/search`, params);
 }
 /*
@@ -13,6 +15,6 @@ export async function searchMusic(params:{keywords:string}) {
  * @Params: {id} : 音乐的ID
  * */
 
-export async function getMusicUrl(params:{id:number}) {
+export async function getMusicUrl(params: { id: number }): Promise<unknown> {
   return await http.get(`/api/song/url`, params);
 }

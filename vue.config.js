@@ -20,8 +20,9 @@ module.exports = {
   indexPath: "index.html", //生成的index.html 文件所在的位置
   filenameHashing: true, //静态文件文件名哈希
   devServer: {
-    host: "192.168.110.77",
-    port: 8080,
+    // host: "192.168.110.77",
+    host: "192.168.31.10",
+    port: 8081,
     proxy: {
       "/api": {
         target: "https://autumnfish.cn/", //要请求的域名

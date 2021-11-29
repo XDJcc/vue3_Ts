@@ -24,12 +24,13 @@ const goHome = (): void => {
 };
 
 const isLoad = ref<boolean>(true);
-console.log("isLoad=>:", isLoad);
-const isLoadNowDom = async (): void => {
+// console.log("isLoad=>:", isLoad);
+const isLoadNowDom = async (): Promise<void> => {
   isLoad.value = false;
   await nextTick();
   isLoad.value = true;
 };
+//更新 router-view 实现贪吃蛇 开始新的游戏
 provide("isLoadNowDom", isLoadNowDom);
 
 watchEffect((): void => {
@@ -40,7 +41,7 @@ watchEffect((): void => {
 
 <template>
   <el-affix :offset="20" v-show="showHome" class="goHome">
-    <el-button type="primary" @click="goHome"></el-button>
+    <el-button type="primary" @click="goHome" ></el-button>
   </el-affix>
   <div class="app">
     <Home class="nav_List"></Home>
@@ -80,6 +81,9 @@ watchEffect((): void => {
   .view {
     width: 80vw;
     height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: scroll;
   }
 }
 

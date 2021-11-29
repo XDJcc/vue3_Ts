@@ -105,7 +105,7 @@ class EnclosureHttp {
    * @param {string} url 路径
    * @param {object} params 参数
    */
-  public get = (url: string, params?:any) => {
+  public get = (url: string, params?: unknown) => {
     return new Promise((resolve, reject) => {
       Axios.get(url, { params }).then(
         (res) => {
@@ -123,7 +123,7 @@ class EnclosureHttp {
    * @param {string} url 路径
    * @param {object} params 参数
    */
-  public post = (url: string, params?:any) => {
+  public post = (url: string, params: unknown = {}) => {
     return new Promise((resolve, reject) => {
       Axios.post(url, Qs.stringify(params))
         .then((res) => {
