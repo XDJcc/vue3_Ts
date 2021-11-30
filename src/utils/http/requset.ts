@@ -4,7 +4,9 @@ import Axios, {
   AxiosError,
   AxiosInstance,
 } from "axios";
+
 import Qs from "qs";
+
 import { ElMessage } from "element-plus";
 
 const message = (msg: string, type?: string) => {
@@ -22,13 +24,14 @@ const defaultConfig: AxiosRequestConfig = {
     Accept: "application/json, text/plain, */*",
     "Content-Type": "application/json",
     "X-Requested-With": "XMLHttpRequest",
-
+    responseType: "json",
   },
 };
 const getConfig = (config?: AxiosRequestConfig): AxiosRequestConfig => {
   if (!config) return defaultConfig;
   return defaultConfig;
 };
+
 class EnclosureHttp {
   //存储 Axios 的实例
   constructor() {
@@ -40,14 +43,12 @@ class EnclosureHttp {
 
   //请求拦截
   private httpInterceptorsRequest(): void {
-    const instance = EnclosureHttp.axiosInstance;
-    instance.interceptors.request.use(
+    EnclosureHttp.axiosInstance.interceptors.request.use(
       (config: AxiosRequestConfig) => {
         /*
          * 在请求发出去之前作出一下处理
          * */
-        config.headers.AuthorData= "我是谢大脚的token";
-        console.log('config=>:',config);
+        // console.log("config=>:", config);
         return config;
       },
       (err) => {
@@ -58,12 +59,12 @@ class EnclosureHttp {
 
   //响应拦截
   private httpInterceptorsResponse(): void {
-    const instance = EnclosureHttp.axiosInstance;
-    instance.interceptors.response.use(
+    EnclosureHttp.axiosInstance.interceptors.response.use(
       (response: AxiosResponse) => {
         /*
          *   对响应的数据作出一些处理
-         * */ +response.status === 200
+         * */
+        +response.status === 200
           ? Promise.resolve(response)
           : Promise.reject(response);
       },
@@ -111,30 +112,10 @@ class EnclosureHttp {
    * @param {string} url 路径
    * @param {object} params 参数
    */
-  public get = (url: string, params?: unknown) => {
-    return Axios.get(url, { params })
-  };
-  // public get = (url: string, params?: unknown) => {
-  //   return new Promise((resolve, reject) => {
-  //     Axios.get(url, { params }).then(
-  //       (res) => {
-  //         resolve(res);
-  //       },
-  //       (err) => {
-  //         reject(err);
-  //       }
-  //     );
-  //   });
-  // };
-
-  /**
-   * post 方法
-   * @param {string} url 路径
-   * @param {object} params 参数
-   */
-  public post = (url: string, params: unknown = {}) => {
+  public reqGet = (url: string, params?: unknown) => {
     return new Promise((resolve, reject) => {
-      Axios.post(url, Qs.stringify(params))
+      EnclosureHttp.axiosInstance
+        .get(url, { params })
         .then((res) => {
           resolve(res);
         })
@@ -143,6 +124,68 @@ class EnclosureHttp {
         });
     });
   };
+
+  /**
+   * post 方法
+   * @param {string} url 路径
+   * @param {object} params 参数
+   * @param config
+   */
+  public reqPost = (
+    url: string,
+    params: unknown = {},
+    config?: AxiosRequestConfig
+  ) => {
+    return new Promise((resolve, reject) => {
+      EnclosureHttp.axiosInstance
+        .post(url, { data: params }, config)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  };
+
+  //Axios init GET
+  public get = (url: string, params?: unknown) => {
+    return new Promise((resolve, reject) => {
+      Axios.get(url, { params })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => {
+          console.log("err=>:", err);
+          reject(err);
+        });
+    });
+  };
+
+  //Axios init POST
+  public post = (
+    url: string,
+    params: unknown = {},
+    config?: AxiosRequestConfig
+  ) => {
+    return new Promise((resolve, reject) => {
+      Axios.post(url, { data: params }, config)
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  };
 }
 
+interface GetMusic<T> {
+  data: T;
+}
+// interface GET {
+//   <T>(url: string, params?: unknown, config?: AxiosRequestConfig): Promise<
+//     GetMusic<T>
+//   >;
+// }
 export default EnclosureHttp;

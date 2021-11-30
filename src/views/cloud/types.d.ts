@@ -1,5 +1,5 @@
 //接口返回的数据类型
-export type Rows<T> = {
+export interface Rows<T> {
   result: Result<T>;
   code: number;
 };

@@ -12,5 +12,10 @@ const homeRouter: Array<RouteRecordRaw> = [
     // eslint-disable-next-line
     // component: () => import("@/views/Home.vue"),
   },
+  {
+    path: "/main",
+    name: "Main",
+    component: () => import("@/views/main/Main.vue"),
+  },
 ];
 export default homeRouter;

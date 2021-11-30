@@ -41,7 +41,7 @@ watchEffect(() => {
 
 <style lang="scss" scoped>
 .active {
-  background: rgba(230, 122, 42,0.3);
+  background: rgba(230, 122, 42, 0.3);
   color: #000;
 }
 .item {

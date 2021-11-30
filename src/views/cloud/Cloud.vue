@@ -3,18 +3,18 @@ import { searchMusic } from "@/api/cloudMusic";
 import { ref } from "vue";
 import { Rows, Songs } from "@/views/cloud/types";
 
-import MusicList from "./components/MusicList";
+import MusicList from "./components/MusicList.vue";
+import { AxiosResponse } from "axios";
 
 const keywords = ref<string>(""); //关键字
 const musicUrl = ref<string>(""); //播放音乐的Url
 const songsList = ref<Songs[]>([]); //获取的音乐列表
 //搜索事件
-const searchClick = async (): void => {
-  const {
-    data: { result },
-  }: { data: Rows<Songs> } = await searchMusic({
+const searchClick = async (): Promise<void> => {
+  const { result, code } = await searchMusic({
     keywords: keywords.value,
   });
+  console.log(code);
   const musicId: number = result.songs[0].id;
   console.log(result);
   songsList.value = result.songs;
@@ -58,7 +58,7 @@ const changeMusic = (id: number): void => {
     <div class="music_list">
       <MusicList :list="songsList" @playMusic="changeMusic"></MusicList>
     </div>
-    <div style="height: 100px;width: 1px"></div>
+    <div style="height: 100px; width: 1px"></div>
     <div class="audio" v-if="musicUrl">
       <audio :src="musicUrl" autoplay controls style="width: 100%"></audio>
     </div>

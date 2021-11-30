@@ -1,4 +1,5 @@
 import http from "@/utils/http";
+import { Rows, Songs } from "@/views/cloud/types";
 const cloudBaseUrl = "https://autumnfish.cn/";
 /*
  * 搜索音乐
@@ -7,7 +8,8 @@ const cloudBaseUrl = "https://autumnfish.cn/";
 
 export async function searchMusic(params: {
   keywords: string;
-}): Promise<unknown> {
+}): Promise<Rows<Songs>> {
+  // @ts-ignore
   return await http.get(cloudBaseUrl + `/search`, params);
 }
 /*
