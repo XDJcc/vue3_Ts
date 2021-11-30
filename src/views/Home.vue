@@ -3,10 +3,10 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const handleOpen = (key, keyPath): void => {
-  console.log(key, keyPath);
+  // console.log(key, keyPath);
 };
 const handleClose = (key, keyPath): void => {
-  console.log(key, keyPath);
+  // console.log(key, keyPath);
 };
 </script>
 

@@ -7,7 +7,7 @@ import Axios, {
 import Qs from "qs";
 import { ElMessage } from "element-plus";
 
-const message = (msg: string, type?: any) => {
+const message = (msg: string, type?: string) => {
   ElMessage({
     message: msg,
     type: type || "warning",
@@ -15,22 +15,28 @@ const message = (msg: string, type?: any) => {
   });
 };
 
+const defaultConfig: AxiosRequestConfig = {
+  baseURL: "",
+  timeout: 10000, //10秒超时
+  headers: {
+    Accept: "application/json, text/plain, */*",
+    "Content-Type": "application/json",
+    "X-Requested-With": "XMLHttpRequest",
+
+  },
+};
+const getConfig = (config?: AxiosRequestConfig): AxiosRequestConfig => {
+  if (!config) return defaultConfig;
+  return defaultConfig;
+};
 class EnclosureHttp {
+  //存储 Axios 的实例
   constructor() {
     this.httpInterceptorsRequest();
     this.httpInterceptorsResponse();
   }
 
-  //存储 Axios 的实例
-  private static axiosInstance: AxiosInstance = Axios.create({
-    baseURL: "",
-    timeout: 10000, //10秒超时
-    headers: {
-      Accept: "application/json, text/plain, */*",
-      "Content-Type": "application/json",
-      "X-Requested-With": "XMLHttpRequest",
-    },
-  });
+  private static axiosInstance: AxiosInstance = Axios.create(getConfig());
 
   //请求拦截
   private httpInterceptorsRequest(): void {
@@ -40,7 +46,8 @@ class EnclosureHttp {
         /*
          * 在请求发出去之前作出一下处理
          * */
-
+        config.headers.AuthorData= "我是谢大脚的token";
+        console.log('config=>:',config);
         return config;
       },
       (err) => {
@@ -56,8 +63,7 @@ class EnclosureHttp {
       (response: AxiosResponse) => {
         /*
          *   对响应的数据作出一些处理
-         * */
-        response.status === 200
+         * */ +response.status === 200
           ? Promise.resolve(response)
           : Promise.reject(response);
       },
@@ -106,17 +112,20 @@ class EnclosureHttp {
    * @param {object} params 参数
    */
   public get = (url: string, params?: unknown) => {
-    return new Promise((resolve, reject) => {
-      Axios.get(url, { params }).then(
-        (res) => {
-          resolve(res);
-        },
-        (err) => {
-          reject(err);
-        }
-      );
-    });
+    return Axios.get(url, { params })
   };
+  // public get = (url: string, params?: unknown) => {
+  //   return new Promise((resolve, reject) => {
+  //     Axios.get(url, { params }).then(
+  //       (res) => {
+  //         resolve(res);
+  //       },
+  //       (err) => {
+  //         reject(err);
+  //       }
+  //     );
+  //   });
+  // };
 
   /**
    * post 方法

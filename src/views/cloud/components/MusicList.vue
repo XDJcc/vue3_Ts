@@ -23,7 +23,7 @@ const playMusic = ({ id, name }): void => {
 watchEffect(() => {
   activeID.value = props.list.length > 0 ? props.list[0].id : null;
 });
-console.log(props.list, "aaaaaaaaaaa");
+// console.log(props.list, "aaaaaaaaaaa");
 </script>
 <template>
   <div

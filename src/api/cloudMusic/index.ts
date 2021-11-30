@@ -1,5 +1,5 @@
 import http from "@/utils/http";
-
+const cloudBaseUrl = "https://autumnfish.cn/";
 /*
  * 搜索音乐
  * @Params: {keywords} : 关键字
@@ -8,7 +8,7 @@ import http from "@/utils/http";
 export async function searchMusic(params: {
   keywords: string;
 }): Promise<unknown> {
-  return await http.get(`/api/search`, params);
+  return await http.get(cloudBaseUrl + `/search`, params);
 }
 /*
  * 获取音乐详情
@@ -18,9 +18,8 @@ export async function searchMusic(params: {
 export async function searchMusicDetail(params: {
   keywords: string;
 }): Promise<unknown> {
-  return await http.get(`/api/song/detail`, params);
+  return await http.get(cloudBaseUrl + `/api/song/detail`, params);
 }
-
 
 /*
  * 获取音乐  -- 暂不可用
@@ -28,5 +27,5 @@ export async function searchMusicDetail(params: {
  * */
 
 export async function getMusicUrl(params: { id: number }): Promise<unknown> {
-  return await http.get(`/api/song/url`, params);
+  return await http.get(cloudBaseUrl + `/api/song/url`, params);
 }
