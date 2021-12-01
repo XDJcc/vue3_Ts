@@ -4,11 +4,14 @@ import Axios, {
   AxiosError,
   AxiosInstance,
 } from "axios";
-
-import Qs from "qs";
+import { Request } from "@/utils/http/types";
 
 import { ElMessage } from "element-plus";
-
+/**
+ * 封装的 element-plus 的消息提示框
+ * @param msg
+ * @param type
+ */
 const message = (msg: string, type?: string) => {
   ElMessage({
     message: msg,
@@ -17,9 +20,31 @@ const message = (msg: string, type?: string) => {
   });
 };
 
+/**
+ * 默认 create Axios 的配置参数
+ */
 const defaultConfig: AxiosRequestConfig = {
   baseURL: "",
   timeout: 10000, //10秒超时
+  withCredentials: true,
+  transformRequest: [
+    (data) => {
+      data = JSON.stringify(data);
+      return data;
+    },
+  ],
+  validateStatus() {
+    // 使用async-await，处理reject情况较为繁琐，所以全部返回resolve，在业务代码中处理异常
+    return true;
+  },
+  transformResponse: [
+    (data) => {
+      if (typeof data === "string" && data.startsWith("{")) {
+        data = JSON.parse(data);
+      }
+      return data;
+    },
+  ],
   headers: {
     Accept: "application/json, text/plain, */*",
     "Content-Type": "application/json",
@@ -27,21 +52,34 @@ const defaultConfig: AxiosRequestConfig = {
     responseType: "json",
   },
 };
+/**
+ * Axios create的时候后去的配置参数
+ * @param config
+ */
 const getConfig = (config?: AxiosRequestConfig): AxiosRequestConfig => {
   if (!config) return defaultConfig;
   return defaultConfig;
 };
 
+/**
+ * 自定义封装的Axios 类
+ */
 class EnclosureHttp {
-  //存储 Axios 的实例
   constructor() {
     this.httpInterceptorsRequest();
     this.httpInterceptorsResponse();
   }
 
+  /**
+   * Axios 实例
+   * @private
+   */
   private static axiosInstance: AxiosInstance = Axios.create(getConfig());
 
-  //请求拦截
+  /**
+   * 请求拦截
+   * @private
+   */
   private httpInterceptorsRequest(): void {
     EnclosureHttp.axiosInstance.interceptors.request.use(
       (config: AxiosRequestConfig) => {
@@ -52,21 +90,33 @@ class EnclosureHttp {
         return config;
       },
       (err) => {
-        return Promise.reject(err);
+        return Promise.resolve(err);
       }
     );
   }
 
-  //响应拦截
+  /**
+   * 响应拦截
+   * @private
+   */
   private httpInterceptorsResponse(): void {
     EnclosureHttp.axiosInstance.interceptors.response.use(
       (response: AxiosResponse) => {
         /*
          *   对响应的数据作出一些处理
          * */
-        +response.status === 200
-          ? Promise.resolve(response)
-          : Promise.reject(response);
+        const { status } = response;
+        let msg = "";
+        if (status < 200 || status >= 300) {
+          // 处理http错误，抛到业务代码
+          if (typeof response.data === "string") {
+            msg = "打盹了！！！";
+            response.data = { msg };
+          } else {
+            response.data.msg = msg;
+          }
+        }
+        return response;
       },
       (error: AxiosError) => {
         //请求出错的验证
@@ -88,7 +138,8 @@ class EnclosureHttp {
 
   /**
    * 请求失败后的错误统一处理
-   * @param {Number} status 请求失败的状态码
+   * @param status 请求失败的状态码
+   * @param other
    */
   private errorHandle = (status: number, other: string) => {
     // 状态码判断
@@ -109,83 +160,59 @@ class EnclosureHttp {
 
   /**
    * get方法
-   * @param {string} url 路径
-   * @param {object} params 参数
+   * @param url 路径
+   * @param params 参数
+   * @param config
    */
-  public reqGet = (url: string, params?: unknown) => {
-    return new Promise((resolve, reject) => {
-      EnclosureHttp.axiosInstance
-        .get(url, { params })
-        .then((res) => {
-          resolve(res);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
+  public reqGet: Request = async (
+    url: string,
+    params?: unknown,
+    config?: AxiosRequestConfig
+  ) => {
+    return await EnclosureHttp.axiosInstance.get(url, { params, ...config });
   };
 
   /**
    * post 方法
-   * @param {string} url 路径
-   * @param {object} params 参数
+   * @param url 路径
+   * @param params 参数
    * @param config
    */
-  public reqPost = (
+  public reqPost: Request = (
     url: string,
     params: unknown = {},
     config?: AxiosRequestConfig
   ) => {
-    return new Promise((resolve, reject) => {
-      EnclosureHttp.axiosInstance
-        .post(url, { data: params }, config)
-        .then((res) => {
-          resolve(res);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
+    return EnclosureHttp.axiosInstance.post(url, { data: params }, config);
   };
 
-  //Axios init GET
-  public get = (url: string, params?: unknown) => {
-    return new Promise((resolve, reject) => {
-      Axios.get(url, { params })
-        .then((res) => {
-          resolve(res.data);
-        })
-        .catch((err) => {
-          console.log("err=>:", err);
-          reject(err);
-        });
-    });
+  /**
+   * Axios init GET方法
+   * @param url 路径
+   * @param params 参数
+   * @param config
+   */
+  public get: Request = (
+    url: string,
+    params?: unknown,
+    config?: AxiosRequestConfig
+  ) => {
+    return Axios.get(url, { params, ...config });
   };
 
-  //Axios init POST
-  public post = (
+  /**
+   * Axios init POST 方法
+   * @param url 路径
+   * @param params 参数
+   * @param config
+   */
+  public post: Request = (
     url: string,
     params: unknown = {},
     config?: AxiosRequestConfig
   ) => {
-    return new Promise((resolve, reject) => {
-      Axios.post(url, { data: params }, config)
-        .then((res) => {
-          resolve(res.data);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
+    return Axios.post(url, { data: params }, config);
   };
 }
 
-interface GetMusic<T> {
-  data: T;
-}
-// interface GET {
-//   <T>(url: string, params?: unknown, config?: AxiosRequestConfig): Promise<
-//     GetMusic<T>
-//   >;
-// }
 export default EnclosureHttp;

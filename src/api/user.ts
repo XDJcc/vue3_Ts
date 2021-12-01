@@ -1,5 +1,5 @@
 import http from "@/utils/http/index";
-import { IUser } from "./types";
+import { IUser } from "../utils/http/types";
 
 export default {
   /*

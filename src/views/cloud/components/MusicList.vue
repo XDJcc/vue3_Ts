@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { Songs } from "@/views/cloud/types";
+import { Songs } from "@/api/cloudMusic/types";
 import { fliterTime } from "@/utils/tools";
 
-import { ref, watchEffect } from "vue";
+import { defineEmits, ref, watchEffect } from "vue";
 
 const props = withDefaults(
   defineProps<{

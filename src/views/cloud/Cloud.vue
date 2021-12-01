@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { searchMusic } from "@/api/cloudMusic";
+import {CloudApi} from "@/api/cloudMusic";
 import { ref } from "vue";
-import { Rows, Songs } from "@/views/cloud/types";
-
+import { Songs } from "@/api/cloudMusic/types";
 import MusicList from "./components/MusicList.vue";
-import { AxiosResponse } from "axios";
 
 const keywords = ref<string>(""); //关键字
 const musicUrl = ref<string>(""); //播放音乐的Url
 const songsList = ref<Songs[]>([]); //获取的音乐列表
 //搜索事件
 const searchClick = async (): Promise<void> => {
-  const { result, code } = await searchMusic({
+  const { result, code } = await CloudApi.searchMusic({
     keywords: keywords.value,
   });
-  console.log(code);
-  const musicId: number = result.songs[0].id;
-  console.log(result);
-  songsList.value = result.songs;
-  musicUrl.value = `https://music.163.com/song/media/outer/url?id=${musicId}.mp3`;
+  if (result && code == 200) {
+    const musicId: number = result.songs[0].id;
+    console.log(result);
+    songsList.value = result.songs;
+    musicUrl.value = `https://music.163.com/song/media/outer/url?id=${musicId}.mp3`;
+  }
+
   // const res = await getMusicUrl({ id: musicId });  // 接口需要验证 好像需要登录才能用
   // console.log(res, "aaaaaaaaa");
 };
