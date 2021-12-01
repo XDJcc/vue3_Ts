@@ -26,10 +26,12 @@ const message = (msg: string, type?: string) => {
 const defaultConfig: AxiosRequestConfig = {
   baseURL: "",
   timeout: 10000, //10秒超时
-  withCredentials: true,
+  withCredentials: false,
+  responseType: "json",
   transformRequest: [
     (data) => {
-      data = JSON.stringify(data);
+      //对请求的参数进行处理
+      // data = JSON.stringify(data);
       return data;
     },
   ],
@@ -39,6 +41,7 @@ const defaultConfig: AxiosRequestConfig = {
   },
   transformResponse: [
     (data) => {
+      //对响应的数据进行处理
       if (typeof data === "string" && data.startsWith("{")) {
         data = JSON.parse(data);
       }
@@ -49,7 +52,6 @@ const defaultConfig: AxiosRequestConfig = {
     Accept: "application/json, text/plain, */*",
     "Content-Type": "application/json",
     "X-Requested-With": "XMLHttpRequest",
-    responseType: "json",
   },
 };
 /**

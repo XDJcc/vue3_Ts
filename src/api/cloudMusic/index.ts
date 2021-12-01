@@ -13,7 +13,10 @@ export class CloudApi {
    * @Params: {keywords} : 关键字
    * */
   static async searchMusic(params: { keywords: string }): Promise<Rows<Songs>> {
-    const res = await http.get<Rows<Songs>>(cloudBaseUrl + `/search`, params);
+    const res = await http.reqGet<Rows<Songs>>(
+      cloudBaseUrl + `/search`,
+      params
+    );
     return res.data;
   }
 
