@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {CloudApi} from "@/api/cloudMusic";
+import { CloudApi } from "@/api/cloudMusic";
 import { ref } from "vue";
 import { Songs } from "@/api/cloudMusic/types";
 import MusicList from "./components/MusicList.vue";
