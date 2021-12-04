@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-043a1e37"],{"6b61":function(e,n,t){"use strict";t.r(n);var o=t("7a23");function c(e,n){return Object(o["openBlock"])(),Object(o["createElementBlock"])("h1",null,"welcome to Xie Dajiao Home")}var r=t("d959"),u=t.n(r);const a={},s=u()(a,[["render",c]]);n["default"]=s},d959:function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.default=(e,n)=>{const t=e.__vccOpts||e;for(const[o,c]of n)t[o]=c;return t}}}]);
+//# sourceMappingURL=chunk-043a1e37.d5d1709f.js.map

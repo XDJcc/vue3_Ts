@@ -30,9 +30,13 @@ watchEffect(() => {
   <div
     v-for="(item, index) in props.list"
     :key="item.id"
+<<<<<<< HEAD
     @dblclick="changeMusic(item)"
+=======
+
+>>>>>>> 88818c0b0d447e61ea58281c8c7a2e15c1a9b08e
   >
-    <div :class="{ active: activeID === item.id, item }">
+    <div :class="{ active: activeID === item.id, item }"  @dblclick="playMusic(item)">
       {{ index + 1 }}、{{ item.name }} -- {{ item.artists[0].name }} --{{
         fliterTime(item.album.publishTime)
       }}
