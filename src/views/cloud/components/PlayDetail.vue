@@ -1,79 +1,91 @@
 <script setup lang="ts">
-import {
-  defineProps,
-  ref,
-  withDefaults,
-  onBeforeMount,
-  watchEffect,
-} from "vue";
+import { ref, withDefaults, onBeforeMount, watchEffect, nextTick } from "vue";
 import { ElMessage } from "element-plus";
 import { CloudApi } from "@/api/cloudMusic";
-import { Rows } from "@/api/cloudMusic/types";
+import { getMusicAllTime } from "@/utils/tools";
 
 const props = withDefaults(defineProps<{ musicUrl: string; id: number }>(), {});
+const audioRef = ref<HTMLAudioElement>(null);
 
-const percentage = ref<number>(0); // 进度条的百分之比
+const finallyTime = ref<number>(null); //音乐总时长
+const nowTime = ref<number>(0); //当前时长
+const numbeAA = ref<number>(0); //当前时长
 const musicType = ref<boolean>(false); // 音乐的播放状态
-const timer = ref(null); //定时器实例
+const lyricList = ref<string[]>([]); //存储歌词的数组
+const flag = ref<boolean>(true);
 
+//监听ID的变化获取新歌的歌词
 watchEffect(() => {
   if (props.id) {
-    getMusicDetail(props.id);
+    nextTick(() => {
+      getMusicDetail(props.id);
+    });
   }
 });
+
 //每一次切换音乐就获取当前音乐的 详细信息
 const getMusicDetail = async (id): Promise<void> => {
   console.log("切换音乐为", id);
-  const res = await CloudApi.getMusicLyric({ id });
-  console.log(`音乐ID 为 ${id}`,res);
-};
-//定时器内部的函数用来更新进度条的长度
-const playProgress = (): void => {
-  percentage.value += percentage.value / (3 * 60 + 50);
-};
-//设置定时器 返回定定时器的返回值
-const setTime = (time = 1000) => {
-  let timer = setInterval(playProgress, time);
-  return timer;
+  musicType.value = true;
+  await audioRef.value.play();
+  const {
+    lrc: { lyric },
+  } = await CloudApi.getMusicLyric({ id });
+  // console.log(`音乐ID 为 ${id}`, lyric);
+  lyricList.value = lyric.split("\n");
+  console.log("lyricList.value", lyricList.value);
 };
 
+//播放上一首
 const upMusic = (): void => {
   ElMessage.success("播放上一首");
 };
+
+//播放  /  暂停播放音乐
 const pauseOrContine = (): void => {
   musicType.value = !musicType.value;
-  if (timer.value) clearInterval(timer.value);
-  let msg = "";
-  if (musicType.value) {
-    msg = "继续播放";
-    timer.value = setTime();
-  } else {
-    msg = "暂停播放";
-  }
-  ElMessage.success(msg);
+  if (musicType.value) audioRef.value.play();
+  else audioRef.value.pause();
 };
+
+//播放下一首歌
 const nextMusic = (): void => {
   ElMessage.success("播放下一首");
 };
 
-onBeforeMount(() => {
-  //组件卸载清除定时器
-  clearInterval(timer.value);
-});
+//获取当前音乐总时长
+const getDuration = (): void => {
+  finallyTime.value = audioRef.value.duration;
+};
+
+//获取当前音乐的时长
+const updateTime = (e) => {
+  nowTime.value = e.target.currentTime;
+};
+
+//拖动滑块
+const dragProgress = (val) => {
+  console.log(val, flag.value);
+  audioRef.value.currentTime = val;
+};
 </script>
 
 <template>
   <div class="cointainer">
     <div class="progress">
-      <div class="start_time time_num">00:00</div>
-      <el-progress
-        :percentage="percentage"
+      <div class="start_time time_num">{{ getMusicAllTime(nowTime) }}</div>
+      <el-slider
+        v-model="nowTime"
+        :max="finallyTime"
+        :min="0"
         style="flex: 1"
-        :show-text="false"
-        color="#333"
+        :step="0.01"
+        @change="dragProgress"
       >
-      </el-progress>
-      <div class="finally_time time_num">03:50</div>
+      </el-slider>
+      <div class="finally_time time_num">
+        {{ getMusicAllTime(finallyTime) }}
+      </div>
     </div>
     <div class="change_music">
       <div class="_icon" @click="upMusic">
@@ -87,6 +99,13 @@ onBeforeMount(() => {
         <el-icon size="25"><arrow-right-bold /></el-icon>
       </div>
     </div>
+    <audio
+      ref="audioRef"
+      :src="props.musicUrl"
+      @canplay="getDuration"
+      style="width: 100%"
+      @timeupdate="updateTime"
+    ></audio>
   </div>
 </template>
 <style scoped lang="scss">

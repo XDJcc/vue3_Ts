@@ -63,15 +63,4 @@ const handleClose = (key, keyPath): void => {
       </el-menu>
     </el-col>
   </el-row>
-  <!--  <div class="home">-->
-  <!--    <h1>This is an home page</h1>-->
-  <!--    <HelloWorld msg="天上人间" />-->
-  <!--    <el-button type="primary" @click="router.push('/first/myName')"-->
-  <!--    >查看我的信息-->
-  <!--    </el-button>-->
-  <!--    <el-button type="primary" @click="router.push('/test')"-->
-  <!--    >查看我的信息-->
-  <!--    </el-button>-->
-  <!--    <el-button type="primary" @click="router.push('/score')">贪吃蛇</el-button>-->
-  <!--  </div>-->
 </template>

@@ -62,3 +62,16 @@ type artist = {
   trans: string | number;
 };
 
+export interface Klyric {
+  code: number;
+  klyric: Lrc;
+  lrc: Lrc;
+  qfy: boolean;
+  sfy: boolean;
+  sgc: boolean;
+  tlyric: Lrc;
+}
+export interface Lrc {
+  lyric: string;
+  version: number;
+}

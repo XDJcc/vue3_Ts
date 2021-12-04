@@ -12,17 +12,13 @@ const selectMusicId = ref<number>(null);
 
 //搜索事件
 const searchClick = async (): Promise<void> => {
-  const { result, code }= await CloudApi.searchMusic({
+  const { result, code } = await CloudApi.searchMusic({
     keywords: keywords.value,
   });
-  const res= await CloudApi.searchMusic({
-    keywords: keywords.value,
-  });
-  console.log(res,'aaaaaaaaaaaaa');
   if (result && code == 200) {
     const musicId: number = result.songs[0].id;
     selectMusicId.value = musicId;
-    console.log(result);
+    console.log('获取的歌曲列表',result);
     songsList.value = result.songs;
     musicUrl.value = `https://music.163.com/song/media/outer/url?id=${musicId}.mp3`;
   }
@@ -73,11 +69,10 @@ const changeMusic = (id: number): void => {
       <MusicList :list="songsList" @playMusic="changeMusic"></MusicList>
     </div>
     <PlayDetail :musicUrl="musicUrl" :id="selectMusicId"></PlayDetail>
-    <div style="height: 100px; width: 1px"></div>
-
-    <div class="audio" v-if="musicUrl">
-      <audio :src="musicUrl" autoplay controls style="width: 100%"></audio>
-    </div>
+<!--    <div style="height: 100px; width: 1px"></div>-->
+<!--    <div class="audio" v-if="musicUrl">-->
+<!--      <audio :src="musicUrl" autoplay controls style="width: 100%"></audio>-->
+<!--    </div>-->
   </div>
 </template>
 

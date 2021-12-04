@@ -15,9 +15,8 @@ export const recAllRoute = function (
   return routeList;
 };
 
-
 export function fliterTime(time = 0): string {
-  const timer = new Date(parseInt(time / 1000 +'') );
+  const timer = new Date(parseInt(time / 1000 + ""));
 
   const year = timer.getFullYear(); //年
   const month = timer.getMonth() + 1; //月
@@ -36,4 +35,16 @@ export function fliterTime(time = 0): string {
   if (mm < 10) clock += "0";
   clock += mm;
   return clock;
+}
+
+//获取音乐的播放时长
+export function getMusicAllTime(time:number): string {
+  //处理时长
+  //分钟
+  const minute = Math.floor(time / 60);
+  const minutes = minute < 10 ? "0" + minute : minute;
+  //秒
+  const second = Math.round(time % 60);
+  const seconds = second < 10 ? "0" + second : second;
+  return minutes + ":" + seconds;
 }
