@@ -1,19 +1,27 @@
 <script setup lang="ts">
-import {CloudApi} from "@/api/cloudMusic";
+import { CloudApi } from "@/api/cloudMusic";
 import { ref } from "vue";
 import { Songs } from "@/api/cloudMusic/types";
 import MusicList from "./components/MusicList.vue";
+import PlayDetail from "./components/PlayDetail.vue";
 
 const keywords = ref<string>(""); //关键字
 const musicUrl = ref<string>(""); //播放音乐的Url
 const songsList = ref<Songs[]>([]); //获取的音乐列表
+const selectMusicId = ref<number>(null);
+
 //搜索事件
 const searchClick = async (): Promise<void> => {
-  const { result, code } = await CloudApi.searchMusic({
+  const { result, code }= await CloudApi.searchMusic({
     keywords: keywords.value,
   });
+  const res= await CloudApi.searchMusic({
+    keywords: keywords.value,
+  });
+  console.log(res,'aaaaaaaaaaaaa');
   if (result && code == 200) {
     const musicId: number = result.songs[0].id;
+    selectMusicId.value = musicId;
     console.log(result);
     songsList.value = result.songs;
     musicUrl.value = `https://music.163.com/song/media/outer/url?id=${musicId}.mp3`;
@@ -28,11 +36,16 @@ const clearSearch = (): void => {
   musicUrl.value = "";
 };
 
-const searchInput = ref<HTMLElement | null>(null);
+const searchInput = ref(null);
+
+//关闭音乐
 const resetSearch = (): void => {
   searchInput.value.clear();
 };
+
+//切换音乐
 const changeMusic = (id: number): void => {
+  selectMusicId.value = id;
   musicUrl.value = `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
 };
 </script>
@@ -55,10 +68,13 @@ const changeMusic = (id: number): void => {
         <el-button type="primary" @click="resetSearch">重置</el-button>
       </el-col>
     </el-row>
+
     <div class="music_list">
       <MusicList :list="songsList" @playMusic="changeMusic"></MusicList>
     </div>
+    <PlayDetail :musicUrl="musicUrl" :id="selectMusicId"></PlayDetail>
     <div style="height: 100px; width: 1px"></div>
+
     <div class="audio" v-if="musicUrl">
       <audio :src="musicUrl" autoplay controls style="width: 100%"></audio>
     </div>

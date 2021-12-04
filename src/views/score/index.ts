@@ -76,7 +76,7 @@ class Snake {
   set x(value: number) {
     if (this.x == value) return;
     //限制范围
-    if (value < 0 || value > 600) {
+    if (value < 0 || value > 300) {
       throw new Error("撞墙！");
     }
     if (
@@ -98,7 +98,7 @@ class Snake {
 
   set y(value: number) {
     if (this.y == value) return;
-    if (value < 0 || value > 600) {
+    if (value < 0 || value > 300) {
       throw new Error("撞墙！");
     }
     if (this.bodies[1] && (this.bodies[1] as HTMLElement).offsetTop === value) {

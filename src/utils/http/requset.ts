@@ -26,12 +26,12 @@ const message = (msg: string, type?: string) => {
 const defaultConfig: AxiosRequestConfig = {
   baseURL: "",
   timeout: 10000, //10秒超时
-  withCredentials: false,
+  withCredentials: true,
   responseType: "json",
   transformRequest: [
     (data) => {
       //对请求的参数进行处理
-      // data = JSON.stringify(data);
+      data = JSON.stringify(data);
       return data;
     },
   ],

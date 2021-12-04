@@ -1,6 +1,6 @@
-//接口返回的数据类型
+//搜索音乐 接口返回的数据类型
 export interface Rows<T> {
-  result: Result<T>;
+  result?: Result<T>;
   code: number;
 }
 
@@ -12,6 +12,7 @@ type Result<T> = {
   songCount: number;
   songs: Array<T>;
 };
+
 /*
  *  获取的音乐列表
  * */
@@ -60,3 +61,4 @@ type artist = {
   picUrl: string;
   trans: string | number;
 };
+

@@ -14,8 +14,8 @@ const emit = defineEmits(["playMusic"]);
 
 const activeID = ref<number>(props.list.length > 0 && props.list[0].id);
 
-const playMusic = ({ id, name }): void => {
-  console.log(name);
+const changeMusic = ({ id, name }): void => {
+  // console.log(name);
   activeID.value = id;
   emit("playMusic", id);
 };
@@ -30,7 +30,7 @@ watchEffect(() => {
   <div
     v-for="(item, index) in props.list"
     :key="item.id"
-    @dbclick="playMusic(item)"
+    @dblclick="changeMusic(item)"
   >
     <div :class="{ active: activeID === item.id, item }">
       {{ index + 1 }}、{{ item.name }} -- {{ item.artists[0].name }} --{{

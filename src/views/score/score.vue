@@ -5,13 +5,14 @@ import { inject, nextTick, onMounted } from "vue";
 onMounted(() => {
   init();
 });
-const init = async (): void => {
+let gameProto: unknown = null;
+
+const init = async (): Promise<void> => {
   await nextTick();
   gameProto = new GameControl();
 };
 
-let gameProto: unknown = null;
-const isLoadNowDom = inject("isLoadNowDom");
+const isLoadNowDom: () => Promise<void> = inject("isLoadNowDom");
 
 //开始新游戏
 const openNewGame = (): void => {
@@ -22,7 +23,7 @@ const openNewGame = (): void => {
 <template>
   <div class="container">
     <el-row type="flex" justify="center">
-      <el-col :span="1" >
+      <el-col :span="1">
         <el-button type="primary" @click="openNewGame">重新开始</el-button>
       </el-col>
     </el-row>

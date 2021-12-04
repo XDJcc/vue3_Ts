@@ -3,6 +3,8 @@ import { ref, watchEffect, nextTick, provide } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import routerList from "@/router/routers";
 import { recAllRoute } from "@/utils/tools";
+import Home from "@/views/Home.vue";
+
 
 //获取路由实例
 const router = useRouter();
@@ -13,7 +15,6 @@ const route = useRoute();
 //获取所有路由 的 name
 const routeList: Array<string> = recAllRoute(routerList);
 // console.log('routeList => :',routeList);
-import Home from "@/views/Home.vue";
 
 //是否显示左上角的回到首页
 const showHome = ref<boolean>(true);
@@ -30,6 +31,7 @@ const isLoadNowDom = async (): Promise<void> => {
   await nextTick();
   isLoad.value = true;
 };
+
 //更新 router-view 实现贪吃蛇 开始新的游戏
 provide("isLoadNowDom", isLoadNowDom);
 
@@ -41,7 +43,7 @@ watchEffect((): void => {
 
 <template>
   <el-affix :offset="20" v-show="showHome" class="goHome">
-    <el-button type="primary" @click="goHome" ></el-button>
+    <el-button type="primary" @click="goHome"></el-button>
   </el-affix>
   <div class="app">
     <Home class="nav_List"></Home>
@@ -83,7 +85,7 @@ watchEffect((): void => {
     padding: 20px;
     box-sizing: border-box;
     overflow-y: scroll;
-    overflow-x:hidden;
+    overflow-x: hidden;
   }
 }
 
