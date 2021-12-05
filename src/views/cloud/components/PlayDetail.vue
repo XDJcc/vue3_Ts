@@ -9,7 +9,6 @@ const audioRef = ref<HTMLAudioElement>(null);
 
 const finallyTime = ref<number>(null); //音乐总时长
 const nowTime = ref<number>(0); //当前时长
-const numbeAA = ref<number>(0); //当前时长
 const musicType = ref<boolean>(false); // 音乐的播放状态
 const lyricList = ref<string[]>([]); //存储歌词的数组
 const flag = ref<boolean>(true);
@@ -67,6 +66,7 @@ const updateTime = (e) => {
 const dragProgress = (val) => {
   console.log(val, flag.value);
   audioRef.value.currentTime = val;
+  audioRef.value.play()
 };
 </script>
 
