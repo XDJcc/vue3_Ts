@@ -17,19 +17,25 @@ const searchClick = async (): Promise<void> => {
   });
   if (result && code == 200) {
     const musicId: number = result.songs[0].id;
-    selectMusicId.value = musicId;
-    console.log('获取的歌曲列表',result);
+    console.log("获取的歌曲列表", result);
     songsList.value = result.songs;
-    musicUrl.value = `https://music.163.com/song/media/outer/url?id=${musicId}.mp3`;
+    selectMusic(musicId);
   }
-
   // const res = await getMusicUrl({ id: musicId });  // 接口需要验证 好像需要登录才能用
   // console.log(res, "aaaaaaaaa");
 };
 
+//生成当前播放的音乐路径 更新ID 获取新的歌词信息
+const selectMusic = (musicId) => {
+  selectMusicId.value = musicId;
+  musicUrl.value = `https://music.163.com/song/media/outer/url?id=${musicId}.mp3`;
+};
+
+//重置搜索
 const clearSearch = (): void => {
   songsList.value = [];
   musicUrl.value = "";
+  selectMusicId.value = null;
 };
 
 const searchInput = ref(null);
@@ -66,13 +72,15 @@ const changeMusic = (id: number): void => {
     </el-row>
 
     <div class="music_list">
-      <MusicList :list="songsList" @playMusic="changeMusic"></MusicList>
+      <el-scrollbar>
+        <MusicList :list="songsList" @playMusic="changeMusic"></MusicList>
+      </el-scrollbar>
     </div>
     <PlayDetail :musicUrl="musicUrl" :id="selectMusicId"></PlayDetail>
-<!--    <div style="height: 100px; width: 1px"></div>-->
-<!--    <div class="audio" v-if="musicUrl">-->
-<!--      <audio :src="musicUrl" autoplay controls style="width: 100%"></audio>-->
-<!--    </div>-->
+    <!--    <div style="height: 100px; width: 1px"></div>-->
+    <!--    <div class="audio" v-if="musicUrl">-->
+    <!--      <audio :src="musicUrl" autoplay controls style="width: 100%"></audio>-->
+    <!--    </div>-->
   </div>
 </template>
 

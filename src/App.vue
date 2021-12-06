@@ -64,7 +64,7 @@ watchEffect((): void => {
 .goHome {
   position: fixed;
   right: 20px;
-  bottom: 20px;
+  top: 20px;
 }
 
 .app {

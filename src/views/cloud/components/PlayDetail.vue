@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import { ref, withDefaults, onBeforeMount, watchEffect, nextTick } from "vue";
+import { ref, withDefaults, watchEffect, nextTick, defineProps } from "vue";
 import { ElMessage } from "element-plus";
 import { CloudApi } from "@/api/cloudMusic";
 import { getMusicAllTime } from "@/utils/tools";
+import MusicLyric from "./MusicLyric.vue";
 
 const props = withDefaults(defineProps<{ musicUrl: string; id: number }>(), {});
 const audioRef = ref<HTMLAudioElement>(null);
 
 const finallyTime = ref<number>(null); //音乐总时长
 const nowTime = ref<number>(0); //当前时长
+
 const musicType = ref<boolean>(false); // 音乐的播放状态
 const lyricList = ref<string[]>([]); //存储歌词的数组
-const flag = ref<boolean>(true);
 
 //监听ID的变化获取新歌的歌词
 watchEffect(() => {
@@ -19,6 +20,9 @@ watchEffect(() => {
     nextTick(() => {
       getMusicDetail(props.id);
     });
+  } else {
+    //Id 不存在就清空歌词列表
+    lyricList.value = [];
   }
 });
 
@@ -62,15 +66,20 @@ const updateTime = (e) => {
   nowTime.value = e.target.currentTime;
 };
 
+watchEffect(() => {
+  if (nowTime.value === finallyTime.value) musicType.value = false;
+});
+
 //拖动滑块
 const dragProgress = (val) => {
-  console.log(val, flag.value);
   audioRef.value.currentTime = val;
-  audioRef.value.play()
+  nowTime.value = val;
+  audioRef.value.play();
 };
 </script>
 
 <template>
+  <MusicLyric :nowTime="nowTime" :lyricList="lyricList"></MusicLyric>
   <div class="cointainer">
     <div class="progress">
       <div class="start_time time_num">{{ getMusicAllTime(nowTime) }}</div>
@@ -81,24 +90,28 @@ const dragProgress = (val) => {
         style="flex: 1"
         :step="0.01"
         @change="dragProgress"
+        :disabled="!finallyTime"
       >
       </el-slider>
       <div class="finally_time time_num">
         {{ getMusicAllTime(finallyTime) }}
       </div>
     </div>
-    <div class="change_music">
-      <div class="_icon" @click="upMusic">
-        <el-icon size="25"><arrow-left-bold /></el-icon>
-      </div>
-      <div class="_icon" @click="pauseOrContine">
-        <el-icon v-show="musicType" size="30"><video-pause /></el-icon>
-        <el-icon v-show="!musicType" size="30"><video-play /></el-icon>
-      </div>
-      <div class="_icon" @click="nextMusic">
-        <el-icon size="25"><arrow-right-bold /></el-icon>
+    <div>
+      <div class="change_music">
+        <div class="_icon" @click="upMusic">
+          <el-icon size="25"><arrow-left-bold /></el-icon>
+        </div>
+        <div class="_icon" @click="pauseOrContine">
+          <el-icon v-show="musicType" size="30"><video-pause /></el-icon>
+          <el-icon v-show="!musicType" size="30"><video-play /></el-icon>
+        </div>
+        <div class="_icon" @click="nextMusic">
+          <el-icon size="25"><arrow-right-bold /></el-icon>
+        </div>
       </div>
     </div>
+
     <audio
       ref="audioRef"
       :src="props.musicUrl"
@@ -112,7 +125,10 @@ const dragProgress = (val) => {
 .cointainer {
   width: 100%;
   height: 100px;
-  background: #0bdee3;
+  background: #012728;
+  color: #fafafa;
+  //border-radius: 20px;
+  padding-top: 10px;
 }
 .progress {
   width: 100%;
