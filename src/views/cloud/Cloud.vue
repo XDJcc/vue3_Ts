@@ -25,7 +25,7 @@ const searchClick = async (): Promise<void> => {
   // console.log(res, "aaaaaaaaa");
 };
 
-//生成当前播放的音乐路径 更新ID 获取新的歌词信息
+//生成当前播放的音乐路径 更新ID
 const selectMusic = (musicId) => {
   selectMusicId.value = musicId;
   musicUrl.value = `https://music.163.com/song/media/outer/url?id=${musicId}.mp3`;
@@ -38,18 +38,18 @@ const clearSearch = (): void => {
   selectMusicId.value = null;
 };
 
-const searchInput = ref(null);
-
 //关闭音乐
+const searchInput = ref(null);
 const resetSearch = (): void => {
   searchInput.value.clear();
 };
 
-//切换音乐
+//双击  切换音乐
 const changeMusic = (id: number): void => {
   selectMusicId.value = id;
   musicUrl.value = `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
 };
+
 </script>
 <template>
   <div class="main">

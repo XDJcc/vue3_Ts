@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import {
-  computed,
   defineProps,
-  onMounted,
   ref,
   watchEffect,
   withDefaults,
@@ -19,10 +17,9 @@ const detailName = ref<string>(""); //打开歌词面板
 const onlyLyricList = ref<string[]>([]); //处理过后的歌词列表
 const onlyTimeList = ref<number[]>([]); //处理过后的歌词列表
 const scrollbarRef = ref(null); // 获取的scrollBar实例
-const ifScrollBar = ref<boolean>(true); //是否允许滚动  鼠标滚动的时候不允许滚动
 
 const nowTop = ref<number>(0); //当前歌词距离顶部的距离
-const nowNum = ref<number>(0); //当前比放到第几行歌词
+const nowLine = ref<number>(0); //当前比放到第几行歌词
 
 //对当前的歌词列表进行处理 => 获取仅存在歌词的歌词列表  和 只有时间的歌词列表
 const disponseLyric = () => {
@@ -79,9 +76,8 @@ const getNowNum = () => {
     let list = onlyTimeList.value;
     list.forEach((item, index) => {
       if (props.nowTime > item && props.nowTime < list[index + 1]) {
-        console.log("index", nowNum.value, index);
-        if (nowNum.value !== index) {
-          nowNum.value = index;
+        if (nowLine.value !== index) {
+          nowLine.value = index;
           scrollBarScroll(index * 30);
         }
       }
@@ -89,6 +85,7 @@ const getNowNum = () => {
     isNowTime = false;
   }, 500);
 };
+
 watchEffect(() => {
   if (props.nowTime) {
     getNowNum();
@@ -97,19 +94,15 @@ watchEffect(() => {
 
 const mouseScroll = (val: { scrollTop: number; scrollLeft: number }) => {
   nowTop.value = val.scrollTop;
-  console.log("scrollTop", val.scrollTop);
 };
 
-onMounted(() => {
-  console.log("Mounted");
-});
 </script>
 <template>
-  <el-collapse accordion v-model="detailName">
+  <el-collapse accordion v-model="detailName" >
     <el-collapse-item name="lyric">
       <template #title>
         <div class="collapse_title">
-          {{ props.lyricList[nowNum] }}
+          {{ props.lyricList[nowLine] }}
         </div>
       </template>
       <el-scrollbar height="400px" ref="scrollbarRef" @scroll="mouseScroll">
@@ -117,7 +110,7 @@ onMounted(() => {
           <div
             v-for="(item, index) in onlyLyricList"
             :key="index"
-            :class="['lyric_line', nowNum == index ? 'active_Lyric' : '']"
+            :class="['lyric_line', nowLine == index ? 'active_Lyric' : '']"
           >
             {{ item }}
           </div>

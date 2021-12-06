@@ -10,7 +10,6 @@ const audioRef = ref<HTMLAudioElement>(null);
 
 const finallyTime = ref<number>(null); //音乐总时长
 const nowTime = ref<number>(0); //当前时长
-
 const musicType = ref<boolean>(false); // 音乐的播放状态
 const lyricList = ref<string[]>([]); //存储歌词的数组
 
@@ -34,9 +33,7 @@ const getMusicDetail = async (id): Promise<void> => {
   const {
     lrc: { lyric },
   } = await CloudApi.getMusicLyric({ id });
-  // console.log(`音乐ID 为 ${id}`, lyric);
   lyricList.value = lyric.split("\n");
-  console.log("lyricList.value", lyricList.value);
 };
 
 //播放上一首
@@ -74,13 +71,21 @@ watchEffect(() => {
 const dragProgress = (val) => {
   audioRef.value.currentTime = val;
   nowTime.value = val;
-  audioRef.value.play();
+  if (val === finallyTime.value) {
+    audioRef.value.pause();
+    musicType.value = false;
+  } else {
+    audioRef.value.play();
+    musicType.value = true;
+  }
 };
+
+const volume = ref<number>(0.2);
 </script>
 
 <template>
-  <MusicLyric :nowTime="nowTime" :lyricList="lyricList"></MusicLyric>
-  <div class="cointainer">
+  <MusicLyric :nowTime="nowTime" :lyricList="lyricList" v-if="id"></MusicLyric>
+  <div class="cointainer" v-if="id">
     <div class="progress">
       <div class="start_time time_num">{{ getMusicAllTime(nowTime) }}</div>
       <el-slider
@@ -91,14 +96,26 @@ const dragProgress = (val) => {
         :step="0.01"
         @change="dragProgress"
         :disabled="!finallyTime"
+        :show-tooltip="false"
       >
       </el-slider>
       <div class="finally_time time_num">
         {{ getMusicAllTime(finallyTime) }}
       </div>
     </div>
-    <div>
-      <div class="change_music">
+    <div class="change_music">
+      <div class="volume">
+        <el-icon size="25" style="margin: 0 10px"><headset /></el-icon>
+        <el-slider
+          v-model="volume"
+          style="width: 100px"
+          :max="1"
+          :min="0"
+          :step="0.01"
+        >
+        </el-slider>
+      </div>
+      <div class="paly_pause">
         <div class="_icon" @click="upMusic">
           <el-icon size="25"><arrow-left-bold /></el-icon>
         </div>
@@ -110,13 +127,13 @@ const dragProgress = (val) => {
           <el-icon size="25"><arrow-right-bold /></el-icon>
         </div>
       </div>
+      <div style="width: 150px;"></div>
     </div>
-
     <audio
       ref="audioRef"
       :src="props.musicUrl"
+      :volume="volume"
       @canplay="getDuration"
-      style="width: 100%"
       @timeupdate="updateTime"
     ></audio>
   </div>
@@ -146,9 +163,19 @@ const dragProgress = (val) => {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  ._icon {
-    margin: 0 30px;
+  justify-content: space-between;
+  .volume {
+    width: 150px;
+    display: flex;
+    align-items: center;
+  }
+  .paly_pause {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    ._icon {
+      margin: 0 30px;
+    }
   }
 }
 </style>

@@ -22,11 +22,13 @@ import {
   Chicken,
   VideoPlay,
   VideoPause,
+  Headset,
 } from "@element-plus/icons";
 
 const components = [
   // icon
   Check,
+  Headset,
   Menu,
   Document,
   HomeFilled,
