@@ -22,7 +22,6 @@ const scrollbarRef = ref(null); // 获取的scrollBar实例
 const ifScrollBar = ref<boolean>(true); //是否允许滚动  鼠标滚动的时候不允许滚动
 
 const nowTop = ref<number>(0); //当前歌词距离顶部的距离
-
 const nowNum = ref<number>(0); //当前比放到第几行歌词
 
 //对当前的歌词列表进行处理 => 获取仅存在歌词的歌词列表  和 只有时间的歌词列表
@@ -49,20 +48,22 @@ watchEffect(() => {
 });
 
 // 滚动 歌词列表
+let scrollTime = null;
 const scrollBarScroll = async (scrollTop: number) => {
   if (!scrollTop) return;
+  if (scrollTime) clearInterval(scrollTime);
   if (scrollTop < nowTop.value) {
-    const timer = setInterval(() => {
-      if (scrollTop >= nowTop.value) clearInterval(timer);
+    scrollTime = setInterval(() => {
+      if (scrollTop >= nowTop.value) clearInterval(scrollTime);
       nowTop.value--;
       scrollbarRef.value && scrollbarRef.value.setScrollTop(nowTop.value);
-    }, 10);
+    }, 1);
   } else {
-    const timer = setInterval(() => {
-      if (scrollTop <= nowTop.value) clearInterval(timer);
+    scrollTime = setInterval(() => {
+      if (scrollTop <= nowTop.value) clearInterval(scrollTime);
       nowTop.value++;
       scrollbarRef.value && scrollbarRef.value.setScrollTop(nowTop.value);
-    }, 10);
+    }, 1);
   }
 };
 
