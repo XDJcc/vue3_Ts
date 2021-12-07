@@ -1,13 +1,14 @@
 /*
  *  master_mutations
  * */
-import { UPDATE_NAME } from "./type";
-import {} from "vuex";
+import { LOGIN, UPDATE_NAME } from "./type";
 
-
-export default {
-  // @typescript-eslint/explicit-module-boundary-types
-  [UPDATE_NAME](state, { data }: { data: string }):void {
+const mutations = {
+  [UPDATE_NAME](state, { data }: { data: string }): void {
     state.name = data;
   },
+  [LOGIN](state, { data }: { data: boolean }): void {
+    state.isLogin = data;
+  },
 };
+export default mutations;

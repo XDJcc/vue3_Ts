@@ -6,8 +6,8 @@ import {
 } from "vue-router";
 
 import routes from "./routers";
-
 import { recAllRoute } from "@/utils/tools";
+import store from "@/store/index";
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -17,6 +17,14 @@ const router = createRouter({
 // 路由白名单（暂时未使用）
 const whiteList = ["/login"];
 const routeList = recAllRoute(routes);
+
+const isLogin = () => {
+  if (store.state.isLogin) return true;
+  else {
+    return JSON.parse(localStorage.getItem("isLogin")) ? true : false;
+  }
+};
+
 
 //路由守卫
 router.beforeResolve(
@@ -34,8 +42,11 @@ router.beforeResolve(
       if (whiteList.indexOf(to.path) !== -1) {
         next();
       } else {
-        // next({ path: "/login" });
-        next();
+        if (!isLogin()) {
+          next({ path: "/login" });
+        } else {
+          next();
+        }
       }
     } else {
       next();

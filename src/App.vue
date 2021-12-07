@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { ref, watchEffect, nextTick, provide } from "vue";
+import { ref, watchEffect, nextTick, provide, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import routerList from "@/router/routers";
 import { recAllRoute } from "@/utils/tools";
 import Home from "@/views/Home.vue";
-
+import { useStore } from "vuex";
 
 //获取路由实例
 const router = useRouter();
-
+const store = useStore();
 //获取路由参数
 const route = useRoute();
 
@@ -39,6 +39,15 @@ watchEffect((): void => {
   // console.log("route.name => :", route.name);
   showHome.value = routeList.includes(route.name as string);
 });
+
+const isLogin = computed(() => {
+  let isLogin: boolean = null;
+  if (store.state.isLogin) isLogin = true;
+  else {
+    isLogin = JSON.parse(localStorage.getItem("isLogin"));
+  }
+  return isLogin;
+});
 </script>
 
 <template>
@@ -46,9 +55,9 @@ watchEffect((): void => {
     <el-button type="primary" @click="goHome"></el-button>
   </el-affix>
   <div class="app">
-    <Home class="nav_List"></Home>
+    <Home class="nav_List" v-if="isLogin"></Home>
     <div class="view">
-      <router-view v-if="isLoad" />
+      <router-view />
     </div>
   </div>
 </template>
@@ -60,7 +69,6 @@ watchEffect((): void => {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
-
 .goHome {
   position: fixed;
   right: 20px;
@@ -80,9 +88,9 @@ watchEffect((): void => {
   }
 
   .view {
-    width: 80vw;
+    flex: 1;
     height: 100%;
-    padding: 20px;
+    //padding: 20px;
     box-sizing: border-box;
     overflow-y: scroll;
     overflow-x: hidden;

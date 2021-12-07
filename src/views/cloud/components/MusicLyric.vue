@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import {
-  defineProps,
-  ref,
-  watchEffect,
-  withDefaults,
-} from "vue";
+import { defineProps, ref, watchEffect, withDefaults } from "vue";
 
 const props = withDefaults(
   defineProps<{
@@ -26,7 +21,8 @@ const disponseLyric = () => {
   let list: string[] = [];
   let timeList: number[] = [];
   props.lyricList.forEach((item) => {
-    list.push(item.substr(11));
+    const nowStr = item.substr(item.indexOf("]") + 1);
+    list.push(nowStr);
     const timeStr = item.substr(1, 8).split(":");
     const timeNum = Number(timeStr[0]) * 60 + Number(timeStr[1]);
     if (!timeList.includes(timeNum)) {
@@ -95,10 +91,9 @@ watchEffect(() => {
 const mouseScroll = (val: { scrollTop: number; scrollLeft: number }) => {
   nowTop.value = val.scrollTop;
 };
-
 </script>
 <template>
-  <el-collapse accordion v-model="detailName" >
+  <el-collapse accordion v-model="detailName">
     <el-collapse-item name="lyric">
       <template #title>
         <div class="collapse_title">

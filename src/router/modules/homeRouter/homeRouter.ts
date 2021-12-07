@@ -14,5 +14,10 @@ const homeRouter: Array<RouteRecordRaw> = [
     name: "Main",
     component: () => import("@/views/main/Main.vue"),
   },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("@/views/Login.vue"),
+  },
 ];
 export default homeRouter;
