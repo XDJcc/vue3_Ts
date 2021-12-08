@@ -2,4 +2,7 @@
  *  Cat_mutations
  * */
 
-export default {};
+const Cat_mutations = {
+
+}
+export default Cat_mutations;

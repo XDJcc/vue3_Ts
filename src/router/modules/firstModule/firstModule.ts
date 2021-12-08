@@ -9,6 +9,7 @@ const remainRouter: Array<RouteRecordRaw> = [
     redirect: "/first/myName",
     name: "first",
     component: () => import("@/views/thirdRouterAndVuex/About.vue"),
+
     children: [
       {
         path: "myName",
@@ -22,12 +23,18 @@ const remainRouter: Array<RouteRecordRaw> = [
             name: "ThirdRoute1",
             component: () =>
               import("@/views/thirdRouterAndVuex/components/MyAge.vue"),
+            meta: {
+              weight: -9,
+            },
           },
           {
             path: "thirdRoute2",
             name: "ThirdRoute2",
             component: () =>
               import("@/views/thirdRouterAndVuex/components/MyWeight.vue"),
+            meta: {
+              weight: -9,
+            },
           },
         ],
       },
@@ -36,6 +43,9 @@ const remainRouter: Array<RouteRecordRaw> = [
         name: "myAge",
         component: () =>
           import("@/views/thirdRouterAndVuex/components/MyAge.vue"),
+        meta: {
+          weight: -9,
+        },
       },
     ],
   },

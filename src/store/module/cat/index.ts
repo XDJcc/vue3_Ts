@@ -1,11 +1,12 @@
 import state from "./state";
 import action from "./action";
 import mutations from "./mutations";
-import getter from "./getter";
+import getters from "./getter";
 
-export default {
-  state,
+const cat = {
+  state: () => state,
   action,
   mutations,
-  getter,
+  getters,
 };
+export default cat;

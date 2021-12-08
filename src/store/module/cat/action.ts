@@ -2,4 +2,7 @@
  *  Cat_action
  * */
 
-export default {};
+const Cat_action = {
+
+}
+export default Cat_action;

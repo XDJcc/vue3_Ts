@@ -48,15 +48,19 @@ const isLogin = computed(() => {
   }
   return isLogin;
 });
+const userWeight = ref<number>(store.getters.nowUserWeight);
+watchEffect(() => {
+  userWeight.value = store.getters.nowUserWeight;
+});
 </script>
 
 <template>
   <el-affix :offset="20" v-show="showHome" class="goHome">
-    <el-button type="primary" @click="goHome"></el-button>
+    <el-button type="primary" @click="goHome">{{ userWeight }}</el-button>
   </el-affix>
   <div class="app">
     <Home class="nav_List" v-if="isLogin"></Home>
-    <div class="view">
+    <div :class="[{ is_login: isLogin }, 'view']">
       <router-view />
     </div>
   </div>
@@ -83,17 +87,19 @@ const isLogin = computed(() => {
   display: flex;
 
   .nav_List {
-    width: 20vw;
+    width: 200px;
     height: 100%;
   }
 
   .view {
     flex: 1;
     height: 100%;
-    //padding: 20px;
     box-sizing: border-box;
     overflow-y: scroll;
     overflow-x: hidden;
+  }
+  .is_login {
+    padding: 20px;
   }
 }
 

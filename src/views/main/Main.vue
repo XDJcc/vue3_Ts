@@ -14,7 +14,7 @@ const removeLogin = () => {
   })
     .then(() => {
       store.dispatch("login", false);
-
+      store.dispatch("updateUserInfo", -1);
       nextTick(() => {
         router.push({ path: "/login" });
       }).then(() => {

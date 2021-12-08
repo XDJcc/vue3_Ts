@@ -1,5 +1,6 @@
 //递归获取所有的路由 name
 import { RouteRecordRaw } from "vue-router";
+import store from "@/store";
 
 export const recAllRoute = function (
   list: Array<RouteRecordRaw>
@@ -38,7 +39,7 @@ export function fliterTime(time = 0): string {
 }
 
 //获取音乐的播放时长
-export function getMusicAllTime(time:number): string {
+export function getMusicAllTime(time: number): string {
   //处理时长
   //分钟
   const minute = Math.floor(time / 60);
@@ -47,4 +48,26 @@ export function getMusicAllTime(time:number): string {
   const second = Math.round(time % 60);
   const seconds = second < 10 ? "0" + second : second;
   return minutes + ":" + seconds;
+}
+
+/*
+ * 对账号进行权重验证 更新权重
+ * @params userId
+ * @params password
+ *
+ * @return Boolean  是不是管理员账号
+ * */
+export async function verifyUserIdentity(
+  userId: string,
+  password: string
+): Promise<boolean> {
+  let userWeight = 1;
+  let isAdmin = false;
+  const userList = store.state.person.userList;
+  if (JSON.stringify(userList).includes(userId) && password == "123456") {
+    isAdmin = true;
+    userWeight = 9;
+  }
+  await store.dispatch("updateUserInfo", userWeight); //更新登陆账号的权重
+  return isAdmin;
 }

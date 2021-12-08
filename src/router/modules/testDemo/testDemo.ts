@@ -9,6 +9,9 @@ const testRouter: Array<RouteRecordRaw> = [
     path: "/test",
     name: "test",
     component: () => import("@/views/test/Test.vue"),
+    meta: {
+      weight: -9,
+    },
   },
 ];
 export default testRouter;

@@ -2,4 +2,5 @@
  *  Cat_getter
  * */
 
-export default {};
+const Cat_getter = {};
+export default Cat_getter;

@@ -5,12 +5,13 @@ import actions from "./actions";
 import state from "@/store/state";
 import mutations from "@/store/mutations";
 
-export default createStore({
-  state,
+const store = createStore({
+  state: () => state,
   actions,
   mutations,
   modules: {
+    person:person,
     cat,
-    person,
   },
 });
+export default store;

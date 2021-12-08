@@ -1,11 +1,13 @@
 import state from "./state";
-import action from "./action";
+import actions from "./action";
+import getters from "./getter";
 import mutations from "./mutations";
-import getter from "./getter";
 
-export default {
+// eslint-disable-next-line
+const person = {
   state,
-  action,
+  actions,
   mutations,
-  getter,
+  getters,
 };
+export default person;
