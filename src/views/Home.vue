@@ -54,6 +54,9 @@ const activeMenu = computed((): string => {
           <el-menu-item index="/first">
             <span>三级路由 VUEX</span>
           </el-menu-item>
+          <el-menu-item index="/first/myAge">
+            <span>三级路由 myAge</span>
+          </el-menu-item>
         </el-sub-menu>
 
         <!--组件测试-->

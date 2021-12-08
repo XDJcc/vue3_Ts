@@ -10,7 +10,7 @@ const scoreRouter: Array<RouteRecordRaw> = [
     name: "Score",
     component: () => import("@/views/score/score.vue"),
     meta: {
-      weight: 2,
+      weight: 5,
     },
   },
 ];

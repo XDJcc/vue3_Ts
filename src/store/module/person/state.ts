@@ -9,12 +9,14 @@ interface Person_state {
 type userInfo = {
   userId: string;
   password: string;
+  IdWeight:number
 };
 
 const state: Person_state = {
   userList: [
-    { userId: "admin", password: "123456" },
-    { userId: "test", password: "123456" },
+    { userId: "admin", password: "123456", IdWeight: 9 },
+    { userId: "test", password: "123456", IdWeight: 8 },
+    { userId: "5", password: "123456", IdWeight: 5 },
   ],
   userWeight: null,
 };

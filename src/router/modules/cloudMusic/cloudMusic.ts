@@ -10,7 +10,7 @@ const cloudRouter: Array<RouteRecordRaw> = [
     name: "Cloud",
     component: () => import("@/views/cloud/Cloud.vue"),
     meta: {
-      weight: 8,
+      weight: 9,
     },
   },
 ];

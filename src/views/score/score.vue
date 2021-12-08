@@ -54,7 +54,7 @@ const openNewGame = (): void => {
 $bg-color: #b7d4a8;
 .container {
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   box-sizing: border-box;
   overflow: hidden;
 }

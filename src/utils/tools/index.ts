@@ -66,7 +66,11 @@ export async function verifyUserIdentity(
   const userList = store.state.person.userList;
   if (JSON.stringify(userList).includes(userId) && password == "123456") {
     isAdmin = true;
-    userWeight = 9;
+    userList.forEach((item) => {
+      if (userId === item.userId && password === item.password) {
+        userWeight = item.IdWeight;
+      }
+    });
   }
   await store.dispatch("updateUserInfo", userWeight); //更新登陆账号的权重
   return isAdmin;
