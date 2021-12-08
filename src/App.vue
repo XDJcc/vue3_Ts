@@ -61,7 +61,10 @@ watchEffect(() => {
   <div class="app">
     <Home class="nav_List" v-if="isLogin"></Home>
     <div :class="[{ is_login: isLogin }, 'view']">
-      <router-view />
+      <div class="router_view">
+        <router-view />
+      </div>
+      <div class="footer">XDJcc</div>
     </div>
   </div>
 </template>
@@ -72,6 +75,10 @@ watchEffect(() => {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+* {
+  margin: 0;
+  padding: 0;
 }
 .goHome {
   position: fixed;
@@ -85,6 +92,8 @@ watchEffect(() => {
   overflow: hidden;
   box-sizing: border-box;
   display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
 
   .nav_List {
     width: 200px;
@@ -94,20 +103,40 @@ watchEffect(() => {
   .view {
     flex: 1;
     height: 100%;
+    overflow: hidden;
     box-sizing: border-box;
+  }
+  .is_login {
+    //padding: 20px;
+  }
+
+  .router_view {
+    width: calc(100% - 40px) ;
+    height: calc(100% - 40px);
+    padding: {
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      bottom: 0;
+    }
     overflow-y: scroll;
     overflow-x: hidden;
   }
-  .is_login {
-    padding: 20px;
+  .router_view::-webkit-scrollbar {
+    display: none;
+  }
+
+  .footer {
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    background: rgba(170, 170, 170, 0.76);
   }
 }
 
 //贪吃蛇继承 样式
-* {
-  margin: 0;
-  padding: 0;
-}
+
 .xx {
   width: 10px !important;
   height: 10px !important;

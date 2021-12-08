@@ -46,7 +46,7 @@ router.beforeResolve(
           if (!isLogin()) {
             next({ path: "/login" });
           } else {
-            if (to.meta.weight >= userWeight) {
+            if (to.meta.weight > userWeight) {
               ElMessage.warning('权限不足')
               next({ path: _from.path });
             } else {

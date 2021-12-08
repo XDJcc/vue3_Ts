@@ -57,6 +57,9 @@ const activeMenu = computed((): string => {
           <el-menu-item index="/first/myAge">
             <span>三级路由 myAge</span>
           </el-menu-item>
+          <el-menu-item index="/test/transition">
+            <span>过度动画</span>
+          </el-menu-item>
         </el-sub-menu>
 
         <!--组件测试-->

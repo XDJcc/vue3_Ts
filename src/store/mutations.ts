@@ -9,6 +9,7 @@ const mutations = {
   },
   [LOGIN](state, { data }: { data: boolean }): void {
     state.isLogin = data;
+    localStorage.setItem("isLogin", `${data}`);
   },
 };
 export default mutations;

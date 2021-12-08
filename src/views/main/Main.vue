@@ -16,6 +16,7 @@ const removeLogin = () => {
       store.dispatch("login", false);
       store.dispatch("updateUserInfo", -1);
       nextTick(() => {
+        window.location.reload()
         router.push({ path: "/login" });
       }).then(() => {
         ElMessage({
@@ -34,7 +35,6 @@ const removeLogin = () => {
 </script>
 <template>
   <h1>welcome to Xie Dajiao Home</h1>
-
   <el-button type="success" @click="removeLogin">退出登陆</el-button>
 </template>
 

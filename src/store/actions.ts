@@ -13,7 +13,6 @@ const actions = {
   },
   login({ commit }: { commit: Commit }, data: boolean) {
     setTimeout(() => {
-      localStorage.setItem("isLogin", `${data}`);
       commit(LOGIN, { data });
     }, 0);
   },

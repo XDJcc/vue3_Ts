@@ -13,5 +13,13 @@ const testRouter: Array<RouteRecordRaw> = [
       weight: -9,
     },
   },
+  {
+    path: "/test/transition",
+    name: "Transition",
+    component: () => import("@/views/test/excessive/transition.vue"),
+    meta: {
+      weight: 4,
+    },
+  },
 ];
 export default testRouter;
