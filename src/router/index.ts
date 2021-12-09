@@ -35,7 +35,7 @@ router.beforeResolve(
   ) => {
     const userWeight = store.getters.nowUserWeight;
     //路由自动回退
-    if (!JSON.stringify(routes).includes(to.name as string) ) {
+    if (!JSON.stringify(routes).includes(to.name as string)) {
       ElMessage.error("界面不存在");
       next({ path: _from.path });
     } else {
@@ -47,7 +47,7 @@ router.beforeResolve(
             next({ path: "/login" });
           } else {
             if (to.meta.weight > userWeight) {
-              ElMessage.warning('权限不足')
+              ElMessage.warning("权限不足");
               next({ path: _from.path });
             } else {
               next();

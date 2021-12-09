@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { gsap } from "gsap";
 
 const demo1x = ref(0);
+const demo1y = ref(0);
 const xCoordinate = (e) => {
   demo1x.value = e.clientX;
+  demo1y.value = e.clientY;
 };
 
 const demo2box = ref(true);
@@ -12,16 +15,51 @@ const changeDemo2 = () => {
 };
 
 const demo3show = ref(true);
+
+const demo4show = ref(false);
+const demo4beforeEnter = (el) => {
+  gsap.set(el, {
+    scaleX: 0.8,
+    scaleY: 1.2,
+  });
+};
+const demo4enter = (el, done) => {
+  gsap.to(el, {
+    duration: 4,
+    scaleX: 2,
+    scaleY: 0.7,
+    opacity: 1,
+    x: 100,
+    ease: "elastic.inOut(20, 1)",
+    onComplete: done,
+  });
+};
+const demo4leave = (el, done) => {
+  gsap.to(el, {
+    duration: 0.7,
+    scaleX: 1,
+    scaleY: 1,
+    x: 200,
+    ease: "elastic.inOut(2.5, 1)",
+  });
+  gsap.to(el, {
+    duration: 0.2,
+    delay: 0.5,
+    opacity: 0,
+    onComplete: done,
+  });
+};
 </script>
 <template>
   <div class="demo_wapper">
     <div
       class="demo1"
       @mousemove="xCoordinate"
-      :style="{ backgroundColor: `hsl(${demo1x}, 80%, 50%)` }"
+      :style="{ backgroundColor: `rgb(${demo1x}, ${demo1y}, 200)` }"
     >
       <h3>Move your mouse</h3>
-      <div class="box2">{{ demo1x }}</div>
+      <div class="box2">x:{{ demo1x }}</div>
+      <div class="box2">y:{{ demo1y }}</div>
     </div>
     <div class="demo2">
       <el-button type="primary" @click="changeDemo2">click</el-button>
@@ -33,16 +71,31 @@ const demo3show = ref(true);
       </transition>
     </div>
     <div class="demo3">
-      <el-button type="primary" @click="demo3show = !demo3show">Toggle show</el-button>
+      <el-button type="primary" @click="demo3show = !demo3show"
+        >Toggle show</el-button
+      >
       <transition name="bounce">
-        <p v-if="demo3show" style="color:#006067">
+        <p v-if="demo3show" style="color: #006067">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
           facilisis enim libero, at lacinia diam fermentum id. Pellentesque
           habitant morbi tristique senectus et netus.
         </p>
       </transition>
     </div>
-    <div class="demo4"></div>
+    <div class="demo4">
+      <el-button type="primary" @click="demo4show = !demo4show">
+        Toggle
+      </el-button>
+
+      <transition
+        @beforeEnter="demo4beforeEnter"
+        @enter="demo4enter"
+        @leave="demo4leave"
+        :css="false"
+      >
+        <div v-if="demo4show" class="box"></div>
+      </transition>
+    </div>
     <div class="demo5"></div>
     <div class="demo6"></div>
     <div class="demo7"></div>
@@ -101,7 +154,7 @@ const demo3show = ref(true);
   transition: 0.2s background-color ease;
 }
 .demo2 {
-  &>div{
+  & > div {
     margin: 0 auto;
   }
 
@@ -131,6 +184,14 @@ const demo3show = ref(true);
     100% {
       transform: scale(1);
     }
+  }
+}
+.demo4 {
+  .box {
+    width: 30px;
+    height: 30px;
+    background: teal;
+    margin-top: 20px;
   }
 }
 </style>
