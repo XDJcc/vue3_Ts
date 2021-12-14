@@ -37,7 +37,9 @@ const logOut = () => {
   userPassword.value = "";
 };
 
-const userID = ref<string>("admin");
+// const userID = ref<string>("admin");
+// const userPassword = ref<string>("123456");
+const userID = ref<string>("test");
 const userPassword = ref<string>("123456");
 
 </script>

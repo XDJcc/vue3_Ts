@@ -96,7 +96,9 @@ const demo4leave = (el, done) => {
         <div v-if="demo4show" class="box"></div>
       </transition>
     </div>
-    <div class="demo5"></div>
+    <div class="demo5">
+
+    </div>
     <div class="demo6"></div>
     <div class="demo7"></div>
     <div class="demo8"></div>

@@ -26,10 +26,13 @@ const goHome = (): void => {
 
 const isLoad = ref<boolean>(true);
 // console.log("isLoad=>:", isLoad);
+
+
+const $refreshRouterViewType = ref(true)
 const isLoadNowDom = async (): Promise<void> => {
-  isLoad.value = false;
+  $refreshRouterViewType.value = false;
   await nextTick();
-  isLoad.value = true;
+  $refreshRouterViewType.value = true;
 };
 
 //更新 router-view 实现贪吃蛇 开始新的游戏
@@ -61,10 +64,10 @@ watchEffect(() => {
   <div class="app">
     <Home class="nav_List" v-if="isLogin"></Home>
     <div :class="[{ is_login: isLogin }, 'view']">
-      <div class="router_view">
-        <router-view />
+      <div :class="[isLogin ? 'router_view' : '_router']">
+        <router-view v-if="$refreshRouterViewType" />
       </div>
-      <div class="footer">XDJcc</div>
+      <div class="footer"  v-if="isLogin">XDJcc</div>
     </div>
   </div>
 </template>
@@ -121,6 +124,10 @@ watchEffect(() => {
     }
     overflow-y: scroll;
     overflow-x: hidden;
+  }
+  ._router{
+    width: 100%;
+    height: 100%;
   }
   .router_view::-webkit-scrollbar {
     display: none;

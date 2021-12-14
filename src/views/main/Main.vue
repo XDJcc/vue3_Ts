@@ -16,7 +16,7 @@ const removeLogin = () => {
       store.dispatch("login", false);
       store.dispatch("updateUserInfo", -1);
       nextTick(() => {
-        window.location.reload()
+        // window.location.reload()
         router.push({ path: "/login" });
       }).then(() => {
         ElMessage({
