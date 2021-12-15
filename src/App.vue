@@ -65,7 +65,9 @@ watchEffect(() => {
     <Home class="nav_List" v-if="isLogin"></Home>
     <div :class="[{ is_login: isLogin }, 'view']">
       <div :class="[isLogin ? 'router_view' : '_router']">
-        <router-view v-if="$refreshRouterViewType" />
+        <keep-active>
+          <router-view v-if="$refreshRouterViewType" />
+        </keep-active>
       </div>
       <div class="footer"  v-if="isLogin">XDJcc</div>
     </div>
