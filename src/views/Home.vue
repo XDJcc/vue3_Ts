@@ -60,6 +60,9 @@ const activeMenu = computed((): string => {
           <el-menu-item index="/test/transition">
             <span>过度动画</span>
           </el-menu-item>
+          <el-menu-item index="/test/richText">
+            <span>SQL富文本</span>
+          </el-menu-item>
         </el-sub-menu>
 
         <!--组件测试-->

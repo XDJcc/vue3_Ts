@@ -10,18 +10,23 @@
   "dependencies": {
     "@element-plus/icons": "0.0.11",
     "axios": "^0.24.0",
+    "clipboard": "^2.0.8",
+    "codemirror": "^5.64.0",
     "core-js": "^3.6.5",
     "element-plus": "^1.2.0-beta.3",
     "gsap": "^3.8.0",
     "progress-bar-webpack-plugin": "^2.1.0",
     "qs": "^6.10.1",
+    "sql-formatter": "^4.0.2",
     "src": "^1.1.2",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.0-0",
+    "vue3-json-viewer": "^1.0.4",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
+    "@types/codemirror": "^5.60.5",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.0",

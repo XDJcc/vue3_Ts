@@ -21,5 +21,13 @@ const testRouter: Array<RouteRecordRaw> = [
       weight: 4,
     },
   },
+  {
+    path: "/test/richText",
+    name: "RichText",
+    component: () => import("@/views/test/RichText.vue"),
+    meta: {
+      weight: 4,
+    },
+  },
 ];
 export default testRouter;
