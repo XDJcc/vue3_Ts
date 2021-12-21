@@ -27,10 +27,10 @@ const activeMenu = computed((): string => {
         :default-active="activeMenu"
         text-color="#fff"
         router
-        unique-opened
         @open="handleOpen"
         @close="handleClose"
       >
+<!--        unique-opened  只允许打开一个-->
         <el-menu-item index="/main">
           <span>XDJcc</span>
         </el-menu-item>
@@ -52,16 +52,19 @@ const activeMenu = computed((): string => {
             <span>testDemo</span>
           </el-menu-item>
           <el-menu-item index="/first">
-            <span>三级路由 VUEX</span>
+            <span>VUEX 三级路由</span>
           </el-menu-item>
           <el-menu-item index="/first/myAge">
-            <span>三级路由 myAge</span>
+            <span>myAge  </span>
           </el-menu-item>
           <el-menu-item index="/test/transition">
             <span>过度动画</span>
           </el-menu-item>
           <el-menu-item index="/test/richText">
             <span>SQL富文本</span>
+          </el-menu-item>
+          <el-menu-item index="/test/dragList">
+            <span>元素拖动</span>
           </el-menu-item>
         </el-sub-menu>
 
@@ -83,9 +86,24 @@ const activeMenu = computed((): string => {
             <el-menu-item index="1-4-1">four one</el-menu-item>
             <el-menu-item index="1-4-2">four two</el-menu-item>
             <el-menu-item index="1-4-3">four three</el-menu-item>
+            <el-menu-item index="1-4-3">four three</el-menu-item>
+            <el-menu-item index="1-4-3">four three</el-menu-item>
+            <el-menu-item index="1-4-3">four three</el-menu-item>
+            <el-menu-item index="1-4-3">four three</el-menu-item>
+            <el-menu-item index="1-4-3">end</el-menu-item>
           </el-sub-menu>
         </el-sub-menu>
       </el-menu>
     </el-col>
   </el-row>
 </template>
+<style lang="scss">
+
+/* 去除滚动条 */
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+</style>

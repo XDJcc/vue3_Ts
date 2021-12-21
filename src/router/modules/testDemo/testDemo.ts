@@ -24,7 +24,15 @@ const testRouter: Array<RouteRecordRaw> = [
   {
     path: "/test/richText",
     name: "RichText",
-    component: () => import("@/views/test/RichText.vue"),
+    component: () => import("@/views/test/richSqlJsonText/RichText.vue"),
+    meta: {
+      weight: 4,
+    },
+  },
+  {
+    path: "/test/dragList",
+    name: "DragList",
+    component: () => import("@/views/test/dragList/DragList.vue"),
     meta: {
       weight: 4,
     },

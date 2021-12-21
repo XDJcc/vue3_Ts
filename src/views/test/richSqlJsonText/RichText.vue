@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CodeEditor from "./components/codeEditor";
+import CodeEditor from "../components/codeEditor.vue";
 import { reactive, ref } from "vue";
 const code = ref("");
 const type = "add";
@@ -20,7 +20,7 @@ const changeValue = () => {
     ></codeEditor>
   </div>
   <div style="margin: 20px 0">
-    <el-button style="margin: 20px" type="primary" @click="changeValue">格式化</el-button>
+    <el-button style="margin: 20px" type="primary" @click="changeValue">格式化JSON</el-button>
     <el-row :gutter="20">
       <el-col :span="12">
         <el-input

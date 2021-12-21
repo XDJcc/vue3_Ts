@@ -102,7 +102,8 @@ watchEffect(() => {
 
   .nav_List {
     width: 200px;
-    height: 100%;
+    height: 100vh;
+    overflow-y: scroll;
   }
 
   .view {
