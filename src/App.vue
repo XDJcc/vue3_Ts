@@ -8,6 +8,7 @@ import { useStore } from "vuex";
 
 //获取路由实例
 const router = useRouter();
+//获取vuex实例
 const store = useStore();
 //获取路由参数
 const route = useRoute();
@@ -27,8 +28,7 @@ const goHome = (): void => {
 const isLoad = ref<boolean>(true);
 // console.log("isLoad=>:", isLoad);
 
-
-const $refreshRouterViewType = ref(true)
+const $refreshRouterViewType = ref(true);
 const isLoadNowDom = async (): Promise<void> => {
   $refreshRouterViewType.value = false;
   await nextTick();
@@ -40,16 +40,18 @@ provide("isLoadNowDom", isLoadNowDom);
 
 watchEffect((): void => {
   // console.log("route.name => :", route.name);
-  showHome.value = routeList.includes(route.name as string);
+  showHome.value =
+    routeList.includes(route.name as string) && route.name != "login";
 });
-
-const isLogin = computed(() => {
-  let isLogin: boolean = null;
-  if (store.state.isLogin) isLogin = true;
+const isLogin = ref<boolean>(false);
+watchEffect(() => {
+  if (store.state.isLogin || JSON.parse(localStorage.getItem("isLogin")))
+    isLogin.value = true;
   else {
-    isLogin = JSON.parse(localStorage.getItem("isLogin"));
+    isLogin.value = false;
   }
-  return isLogin;
+  store.dispatch("login", isLogin.value);
+  localStorage.setItem("isLogin", JSON.stringify(isLogin.value));
 });
 const userWeight = ref<number>(store.getters.nowUserWeight);
 watchEffect(() => {
@@ -69,7 +71,7 @@ watchEffect(() => {
           <router-view v-if="$refreshRouterViewType" />
         </keep-active>
       </div>
-      <div class="footer"  v-if="isLogin">XDJcc</div>
+      <div class="footer" v-if="isLogin">XDJcc</div>
     </div>
   </div>
 </template>
@@ -81,10 +83,12 @@ watchEffect(() => {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+
 * {
   margin: 0;
   padding: 0;
 }
+
 .goHome {
   position: fixed;
   right: 20px;
@@ -112,12 +116,13 @@ watchEffect(() => {
     overflow: hidden;
     box-sizing: border-box;
   }
+
   .is_login {
     //padding: 20px;
   }
 
   .router_view {
-    width: calc(100% - 40px) ;
+    width: calc(100% - 40px);
     height: calc(100% - 40px);
     padding: {
       top: 20px;
@@ -128,10 +133,12 @@ watchEffect(() => {
     overflow-y: scroll;
     overflow-x: hidden;
   }
-  ._router{
+
+  ._router {
     width: 100%;
     height: 100%;
   }
+
   .router_view::-webkit-scrollbar {
     display: none;
   }

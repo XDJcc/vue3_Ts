@@ -2,10 +2,11 @@
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { nextTick } from "vue";
+import { inject, nextTick } from "vue";
 
 const store = useStore();
 const router = useRouter();
+// const $refrech:()=>Promise<void> = inject("isLoadNowDom");
 const removeLogin = () => {
   ElMessageBox.confirm("是否退出登陆?", "Warning", {
     confirmButtonText: "确认",
@@ -17,6 +18,7 @@ const removeLogin = () => {
       store.dispatch("updateUserInfo", -1);
       nextTick(() => {
         // window.location.reload()
+        // $refrech()
         router.push({ path: "/login" });
       }).then(() => {
         ElMessage({

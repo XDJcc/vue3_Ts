@@ -30,7 +30,7 @@ const activeMenu = computed((): string => {
         @open="handleOpen"
         @close="handleClose"
       >
-<!--        unique-opened  只允许打开一个-->
+        <!--        unique-opened  只允许打开一个-->
         <el-menu-item index="/main">
           <span>XDJcc</span>
         </el-menu-item>
@@ -55,7 +55,7 @@ const activeMenu = computed((): string => {
             <span>VUEX 三级路由</span>
           </el-menu-item>
           <el-menu-item index="/first/myAge">
-            <span>myAge  </span>
+            <span>myAge </span>
           </el-menu-item>
           <el-menu-item index="/test/transition">
             <span>过度动画</span>
@@ -98,7 +98,6 @@ const activeMenu = computed((): string => {
   </el-row>
 </template>
 <style lang="scss">
-
 /* 去除滚动条 */
 ::-webkit-scrollbar {
   display: none;
