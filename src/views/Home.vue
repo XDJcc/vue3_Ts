@@ -39,17 +39,18 @@ const activeMenu = computed((): string => {
           <template #title>Cloud_Music</template>
           <el-menu-item index="/cloud"><span>搜索音乐</span></el-menu-item>
         </el-sub-menu>
+
         <el-sub-menu index="3">
-          <template #title>my-Demo</template>
+          <template #title>Gluttonous Snake</template>
           <el-menu-item index="/score">
             <span>贪吃蛇</span>
           </el-menu-item>
         </el-sub-menu>
 
         <el-sub-menu index="4">
-          <template #title>测试</template>
+          <template #title>Test Component</template>
           <el-menu-item index="/test">
-            <span>testDemo</span>
+            <span>路由跳转</span>
           </el-menu-item>
           <el-menu-item index="/first">
             <span>VUEX 三级路由</span>
@@ -70,7 +71,7 @@ const activeMenu = computed((): string => {
 
         <!--组件测试-->
         <el-sub-menu index="1">
-          <template #title> Navigator Two</template>
+          <template #title>Multi-menu</template>
           <el-menu-item index="1-1">item one</el-menu-item>
           <el-menu-item index="1-2">item one</el-menu-item>
           <el-menu-item index="1-3">item three</el-menu-item>

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { ref, watchEffect, nextTick, provide, computed } from "vue";
+import { ref, watchEffect, nextTick, provide } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import routerList from "@/router/routers";
 import { recAllRoute } from "@/utils/tools";
 import Home from "@/views/Home.vue";
 import { useStore } from "vuex";
-
 //获取路由实例
 const router = useRouter();
 //获取vuex实例
@@ -93,6 +92,7 @@ watchEffect(() => {
   position: fixed;
   right: 20px;
   top: 20px;
+  z-index: 9999;
 }
 
 .app {
