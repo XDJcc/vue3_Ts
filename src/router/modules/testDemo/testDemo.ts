@@ -37,5 +37,21 @@ const testRouter: Array<RouteRecordRaw> = [
       weight: 4,
     },
   },
+  {
+    path: "/test/dragDialog",
+    name: "DragDialog",
+    component: () => import("@/views/test/dragDialog/index.vue"),
+    meta: {
+      weight: 4,
+    },
+  },
+  {
+    path: "/test/splitPanes",
+    name: "SplitPanes",
+    component: () => import("@/views/test/splitPanes/index.vue"),
+    meta: {
+      weight: 4,
+    },
+  },
 ];
 export default testRouter;

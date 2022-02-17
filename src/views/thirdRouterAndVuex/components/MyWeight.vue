@@ -4,7 +4,6 @@ import { useStore } from "vuex";
 import { ElMessage } from "element-plus";
 
 const store = useStore();
-const myWeight = ref<string>("张三的体重是180斤");
 const newName = ref<string>("");
 
 const changeName = (): void => {
@@ -22,11 +21,10 @@ const changeName = (): void => {
 
 <template>
   <div>
-    {{ myWeight }}
-    {{ store.state.name }}
-    <el-row>
+    <el-row :gutter="10">
+      <el-col :span="4"> 用户名：<span style="color: #38a438">{{ store.state.name }}</span></el-col>
       <el-col :span="5">
-        <el-input type="string" v-model="newName" clearable></el-input>
+        <el-input type="string" v-model="newName" clearable @keyup.enter="changeName"></el-input>
       </el-col>
       <el-col :span="2">
         <el-button type="primary" @click="changeName">修改</el-button>

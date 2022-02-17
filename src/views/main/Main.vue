@@ -6,15 +6,16 @@ import { nextTick, onMounted, ref } from "vue";
 import useEchar from "@/plugins/echarts";
 import { option } from "@/utils/tools/echartsOptions.ts";
 
-console.log("option===>", option);
 const store = useStore();
 const router = useRouter();
+const name = ref(store.state.name)
+
 // const $refrech:()=>Promise<void> = inject("isLoadNowDom");
 const removeLogin = () => {
   ElMessageBox.confirm("是否退出登陆?", "Warning", {
     confirmButtonText: "确认",
     cancelButtonText: "取消",
-    type: "warning",
+    type: "warning"
   })
     .then(() => {
       store.dispatch("login", false);
@@ -28,14 +29,14 @@ const removeLogin = () => {
       }).then(() => {
         ElMessage({
           type: "success",
-          message: "退出成功",
+          message: "退出成功"
         });
       });
     })
     .catch(() => {
       ElMessage({
         type: "info",
-        message: "取消操作",
+        message: "取消操作"
       });
     });
 };
@@ -49,16 +50,16 @@ onMounted(async () => {
     title: { text: "XDJcc的图表" },
     tooltip: {},
     xAxis: {
-      data: ["12-3", "12-4", "12-5", "12-6", "12-7", "12-8"],
+      data: ["12-3", "12-4", "12-5", "12-6", "12-7", "12-8"]
     },
     yAxis: {},
     series: [
       {
         name: "用户量",
         type: "line",
-        data: [5, 20, 36, 10, 10, 20],
-      },
-    ],
+        data: [5, 20, 36, 10, 10, 20]
+      }
+    ]
   };
   const { init_chart } = await useEchar(myOptions, "init_chart");
   console.log("生成图标函数返回的图标实例", init_chart.value);
@@ -68,17 +69,21 @@ onMounted(async () => {
 <template>
   <div style="width: 100%">
     <el-row>
-      <h1>welcome to Xie Dajiao Home</h1>
+      <h1> welcome to Xie Dajiao Home <span>{{name}}</span></h1>
     </el-row>
     <el-row>
       <el-button type="success" @click="removeLogin">退出登陆</el-button>
       <el-button type="success" @click="toLoginPage">进入登录界面</el-button>
     </el-row>
-    <el-row>
-      <div id="init_chart" :style="{ width: '800px', height: '300px' }"></div>
+    <el-row style="box-shadow: 1px 0px 5px 0px #333d53;padding: 20px">
+      <el-col :span="12">
+        <div id="init_chart" :style="{ width: '800px', height: '300px' }"></div>
+      </el-col>
+      <el-col :span="12">
+        <div id="init_chart2" :style="{ width: '600px', height: '600px' }"></div>
+      </el-col>
     </el-row>
     <el-row>
-      <div id="init_chart2" :style="{ width: '600px', height: '600px' }"></div>
     </el-row>
   </div>
 </template>
@@ -89,6 +94,7 @@ onMounted(async () => {
     bottom: 20px;
   }
 }
+
 #init_chart2 {
   margin: 10px;
   border: 1px silver solid;

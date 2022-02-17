@@ -49,17 +49,11 @@ const activeMenu = computed((): string => {
 
         <el-sub-menu index="4">
           <template #title>Test Component</template>
-          <el-menu-item index="/test">
-            <span>路由跳转</span>
+          <el-menu-item index="/test/dragDialog">
+            <span>拖动指令</span>
           </el-menu-item>
-          <el-menu-item index="/first">
-            <span>VUEX 三级路由</span>
-          </el-menu-item>
-          <el-menu-item index="/first/myAge">
-            <span>myAge </span>
-          </el-menu-item>
-          <el-menu-item index="/test/transition">
-            <span>过度动画</span>
+          <el-menu-item index="/test/splitPanes">
+            <span>分栏</span>
           </el-menu-item>
           <el-menu-item index="/test/richText">
             <span>SQL富文本</span>
@@ -67,6 +61,16 @@ const activeMenu = computed((): string => {
           <el-menu-item index="/test/dragList">
             <span>元素拖动</span>
           </el-menu-item>
+          <el-menu-item index="/test">
+            <span>路由跳转</span>
+          </el-menu-item>
+          <el-menu-item index="/test/transition">
+            <span>过度动画</span>
+          </el-menu-item>
+          <el-menu-item index="/first">
+            <span>VUEX 三级路由</span>
+          </el-menu-item>
+
         </el-sub-menu>
 
         <!--组件测试-->
