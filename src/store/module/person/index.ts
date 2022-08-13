@@ -3,8 +3,7 @@ import actions from "./action";
 import getters from "./getter";
 import mutations from "./mutations";
 
-// eslint-disable-next-line
-const person = {
+const person: { mutations: any; state: any; getters: { nowUserWeight(state): number }; actions: { updateUserInfo: ({commit}: { commit: any }, data: number) => Promise<void> } } = {
   state,
   actions,
   mutations,

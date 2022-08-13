@@ -9,7 +9,7 @@ const store = useStore();
 const router = useRouter();
 
 //登陆账号
-const loginUser = () => {
+const loginUser = async () => {
   if (!userID.value || !userPassword.value) {
     ElMessage({
       type: "error",
@@ -24,11 +24,11 @@ const loginUser = () => {
       message: "临时权限登陆！！",
     });
   }
-  store.dispatch("login", true);
-  setTimeout(() => {
-    // console.log(store.state.isLogin);
-    router.push({path: "/"});
-  }, 0);
+  await store.dispatch("login", true);
+  await store.dispatch('mockLogin')
+  await router.push({path: "/"});
+  // console.log('asdasdasdasdasda', store.state.isLogin);
+
 };
 
 //重置操作

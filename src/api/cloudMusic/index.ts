@@ -1,8 +1,8 @@
 import http from "@/utils/http";
 import { Klyric, Rows, Songs } from "@/api/cloudMusic/types.ts";
 
-const cloudBaseUrl = "https://autumnfish.cn/";
-// const cloud = "/api";
+// const cloudBaseUrl = "https://autumnfish.cn/";
+const cloudBaseUrl = "/api";
 
 /**
  * 网易云音乐开放接口的数据

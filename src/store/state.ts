@@ -3,14 +3,18 @@
  * */
 
 
-export interface Istate {
-  name: string;
-  isLogin: boolean;
+import {getToken} from "@/utils/localStorage/setLocalSotrage";
+
+export interface IsState {
+    name: string;
+    isLogin: boolean;
+    token: string,
 }
 
-const state: Istate = {
-  name: "李四",
-  isLogin: false,
+const state: IsState = {
+    name: "李四",
+    isLogin: false,
+    token: getToken() ?? "",
 };
 
 export default state;

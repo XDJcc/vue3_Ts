@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-import { ElMessage, ElMessageBox } from "element-plus";
-import { nextTick, onMounted, ref } from "vue";
+import {useStore} from "vuex";
+import {useRouter} from "vue-router";
+import {ElMessage, ElMessageBox} from "element-plus";
+import {nextTick, onMounted, ref} from "vue";
 import useEchar from "@/plugins/echarts";
-import { option } from "@/utils/tools/echartsOptions.ts";
+import {option} from "@/utils/tools/echartsOptions.ts";
+import UserApi from "@/api/user";
 
 const store = useStore();
 const router = useRouter();
@@ -17,36 +18,37 @@ const removeLogin = () => {
     cancelButtonText: "取消",
     type: "warning",
   })
-    .then(() => {
-      store.dispatch("login", false);
-      store.dispatch("updateUserInfo", -1);
-      nextTick(() => {
-        // window.location.reload()
-        // $refrech()
-        setTimeout(() => {
-          router.push({ path: "/login" });
-        }, 1);
-      }).then(() => {
+      .then(async () => {
+        await store.dispatch("login", false);
+        await store.dispatch("updateUserInfo", -1);
+        await store.dispatch("mockLoginOut");
+        nextTick(() => {
+          // window.location.reload()
+          // $refrech()
+          setTimeout(() => {
+            router.push({path: "/login"});
+          }, 1);
+        }).then(() => {
+          ElMessage({
+            type: "success",
+            message: "退出成功",
+          });
+        });
+      })
+      .catch(() => {
         ElMessage({
-          type: "success",
-          message: "退出成功",
+          type: "info",
+          message: "取消操作",
         });
       });
-    })
-    .catch(() => {
-      ElMessage({
-        type: "info",
-        message: "取消操作",
-      });
-    });
 };
 
 const toLoginPage = () => {
-  router.push({ path: "/login" });
+  router.push({path: "/login"});
 };
 onMounted(async () => {
   const myOptions = {
-    title: { text: "XDJcc的图表" },
+    title: {text: "XDJcc的图表"},
     tooltip: {},
     xAxis: {
       data: ["12-3", "12-4", "12-5", "12-6", "12-7", "12-8"],
@@ -60,9 +62,9 @@ onMounted(async () => {
       },
     ],
   };
-  const { init_chart } = await useEchar(myOptions, "init_chart");
-  console.log("生成图标函数返回的图标实例", init_chart.value);
-  const { init_chart2 } = await useEchar(option, "init_chart2");
+  const {init_chart} = await useEchar(myOptions, "init_chart");
+  // console.log("生成图标函数返回的图标实例", init_chart.value);
+  const {init_chart2} = await useEchar(option, "init_chart2");
   console.log(init_chart2);
 });
 </script>
@@ -83,8 +85,8 @@ onMounted(async () => {
       </el-col>
       <el-col :span="12">
         <div
-          id="init_chart2"
-          :style="{ width: '600px', height: '600px' }"
+            id="init_chart2"
+            :style="{ width: '600px', height: '600px' }"
         ></div>
       </el-col>
     </el-row>
