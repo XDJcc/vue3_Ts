@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-import { ElMessage } from "element-plus";
-import { verifyUserIdentity } from "@/utils/tools";
+import {useStore} from "vuex";
+import {useRouter} from "vue-router";
+import {ref} from "vue";
+import {ElMessage} from "element-plus";
+import {verifyUserIdentity} from "@/utils/tools";
 
 const store = useStore();
 const router = useRouter();
@@ -27,7 +27,7 @@ const loginUser = () => {
   store.dispatch("login", true);
   setTimeout(() => {
     // console.log(store.state.isLogin);
-    router.push({ path: "/" });
+    router.push({path: "/"});
   }, 0);
 };
 
@@ -47,13 +47,13 @@ const userPassword = ref<string>("123456");
   <div class="login_container">
     <div class="wapper">
       <el-row>
-        <el-col :span="4"> 账号： </el-col>
+        <el-col :span="4"> 账号：</el-col>
         <el-col :span="16">
           <el-input v-model.trim="userID"></el-input>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="4"> 密码： </el-col>
+        <el-col :span="4"> 密码：</el-col>
         <el-col :span="16">
           <el-input v-model.trim="userPassword" type="password"></el-input>
         </el-col>
@@ -79,18 +79,22 @@ const userPassword = ref<string>("123456");
   align-items: center;
   justify-content: center;
   color: #fff;
+
   .el-row {
     margin: 20px;
+
     .el-col {
       min-width: 50px;
     }
   }
 }
+
 .login_container {
   width: 100vw;
   height: 100vh;
-  background-image: url("../assets/img/login_bg.jpg");
+  //background-image: url("https://pic.netbian.com/uploads/allimg/210925/235150-163258511050e3.jpg");
   background-size: 100%;
+  background-color: #81d8d0;
   display: flex;
   align-items: center;
   justify-content: center;

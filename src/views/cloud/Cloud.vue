@@ -1,18 +1,27 @@
 <script setup lang="ts">
-import { CloudApi } from "@/api/cloudMusic";
-import { ref } from "vue";
-import { Songs } from "@/api/cloudMusic/types";
+import {CloudApi} from "@/api/cloudMusic";
+import {ref} from "vue";
+import {Songs} from "@/api/cloudMusic/types";
 import MusicList from "./components/MusicList.vue";
 import PlayDetail from "./components/PlayDetail.vue";
+import {ElMessage} from "element-plus";
 
 const keywords = ref<string>(""); //关键字
 const musicUrl = ref<string>(""); //播放音乐的Url
 const songsList = ref<Songs[]>([]); //获取的音乐列表
 const selectMusicId = ref<number>(null);
-
+const isRequest = ref<boolean>(true);
 //搜索事件
-const searchClick = async (): Promise<void> => {
-  const { result, code } = await CloudApi.searchMusic({
+const searchClick = async () => {
+  if (!isRequest.value) {
+    ElMessage('稍等一会儿')
+    return;
+  }
+  isRequest.value = false;
+  setTimeout(() => {
+    isRequest.value = true;
+  }, 5000)
+  const {result, code} = await CloudApi.searchMusic({
     keywords: keywords.value,
   });
   if (result && code == 200) {
@@ -56,13 +65,13 @@ const changeMusic = (id: number): void => {
     <el-row :gutter="20">
       <el-col :span="8">
         <el-input
-          type="primary"
-          v-model="keywords"
-          clearable
-          placeholder="请输入关键字搜索音乐"
-          @keyup.enter="searchClick"
-          @clear="clearSearch"
-          ref="searchInput"
+            type="primary"
+            v-model="keywords"
+            clearable
+            placeholder="请输入关键字搜索音乐"
+            @keyup.enter="searchClick"
+            @clear="clearSearch"
+            ref="searchInput"
         ></el-input>
       </el-col>
       <el-col :span="8">
@@ -94,13 +103,16 @@ const changeMusic = (id: number): void => {
   align-content: space-between;
   overflow: hidden;
 }
+
 .music_list {
   flex: 1;
   overflow-y: scroll;
 }
+
 .music_list::-webkit-scrollbar {
   display: none;
 }
+
 .audio {
   width: 80vw;
   position: fixed;
