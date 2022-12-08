@@ -1,21 +1,22 @@
 <script setup lang="ts">
-import { Songs } from "@/api/cloudMusic/types";
-import { fliterTime } from "@/utils/tools";
+import {Songs} from "@/api/cloudMusic/types";
+import {fliterTime} from "@/utils/tools";
 
-import { defineEmits, PropType, ref, watchEffect } from "vue";
+import {defineEmits, PropType, ref, watchEffect} from "vue";
 
 const props = withDefaults(
-  defineProps<{
-    list: Songs[];
-  }>(),
-  { list: () => [] as Songs[] }
+    defineProps<{
+      list: Songs[];
+    }>(),
+    {list: () => []}
 );
+console.log('xcccc====>' + props.list)
+
 const emit = defineEmits(["playMusic"]);
 
-const activeID = ref<number>(props.list.length > 0 && props.list[0].id);
+const activeID = ref<number>(props.list.length > 0 ? props.list[0].id : null);
 
-const changeMusic = ({ id, name }): void => {
-  // console.log(name);
+const changeMusic = ({id, name}): void => {
   activeID.value = id;
   emit("playMusic", id);
 };
@@ -23,19 +24,20 @@ const changeMusic = ({ id, name }): void => {
 watchEffect(() => {
   activeID.value = props.list.length > 0 ? props.list[0].id : null;
 });
-// console.log(props.list, "aaaaaaaaaaa");
 </script>
 
 <template>
   <div
-    v-for="(item, index) in props.list"
-    :key="item.id"
-    @dblclick="changeMusic(item)"
+      v-for="(item, index) in props.list"
+      :key="item.id"
+      @dblclick="changeMusic(item)"
   >
     <div :class="{ active: activeID === item.id, item }">
-      {{ index + 1 }}、{{ item.name }} -- {{ item.artists[0].name }} --{{
-        fliterTime(item.album.publishTime)
-      }}
+      {{ index + 1 }}、{{ item.name }} -- {{ item.al.name }}
+      <!--      {{ item.artists[0].name }} &#45;&#45;-->
+      <!--      {{-->
+      <!--        fliterTime(item.album.publishTime)-->
+      <!--      }}-->
     </div>
   </div>
 </template>
@@ -48,10 +50,12 @@ watchEffect(() => {
   -khtml-user-select: none; /*早期浏览器*/
   user-select: none;
 }
+
 .active {
   background: rgba(230, 122, 42, 0.3);
   color: #000;
 }
+
 .item {
   height: 30px;
   margin: 10px;
@@ -61,6 +65,7 @@ watchEffect(() => {
   line-height: 30px;
   @include notSelect;
 }
+
 .item:hover {
   background: rgba(230, 122, 42, 0.1);
 }

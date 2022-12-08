@@ -26,6 +26,7 @@ const openNewGame = (): void => {
       <el-col :span="1">
         <el-button type="primary" @click="openNewGame">重新开始</el-button>
       </el-col>
+
     </el-row>
     <!--创建游戏的主容器-->
     <div class="main">
@@ -40,13 +41,15 @@ const openNewGame = (): void => {
           <!--设置食物-->
         </div>
       </div>
-
       <!--设置游戏的积分牌-->
       <div id="score-panel" class="score-panel">
         <div id="scoreEle">Score:0</div>
         <div id="levelEle">Level:1</div>
       </div>
     </div>
+    <el-card style="width: 300px;margin:  10px auto;text-align: center">
+      上下左右键开始 任意键暂停
+    </el-card>
   </div>
 </template>
 

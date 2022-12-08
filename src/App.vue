@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref, watchEffect, nextTick, provide } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import {ref, watchEffect, nextTick, provide} from "vue";
+import {useRouter, useRoute} from "vue-router";
 import routerList from "@/router/routers";
-import { recAllRoute } from "@/utils/tools";
+import {recAllRoute} from "@/utils/tools";
 import Home from "@/views/Home.vue";
-import { useStore } from "vuex";
+import {useStore} from "vuex";
 //获取路由实例
 const router = useRouter();
 //获取vuex实例
@@ -21,7 +21,7 @@ const showHome = ref<boolean>(true);
 
 //返回到首页
 const goHome = (): void => {
-  router.push({ path: "/" });
+  router.push({path: "/"});
 };
 
 const isLoad = ref<boolean>(true);
@@ -40,7 +40,7 @@ provide("isLoadNowDom", isLoadNowDom);
 watchEffect((): void => {
   // console.log("route.name => :", route.name);
   showHome.value =
-    routeList.includes(route.name as string) && route.name != "login";
+      routeList.includes(route.name as string) && route.name != "login";
 });
 const isLogin = ref<boolean>(false);
 watchEffect(() => {
@@ -65,10 +65,12 @@ watchEffect(() => {
   <div class="app">
     <Home class="nav_List" v-if="isLogin"></Home>
     <div :class="[{ is_login: isLogin }, 'view']">
-      <div :class="[isLogin ? 'router_view' : '_router']">
-        <keep-active>
-          <router-view v-if="$refreshRouterViewType" />
-        </keep-active>
+      <div :class="[isLogin ? 'router_view' : '_router']" >
+        <router-view v-slot="{Component}" v-if="$refreshRouterViewType">
+          <keep-alive>
+            <component :is="Component" v-if="true" :key="$route.name" ></component>
+          </keep-alive>
+        </router-view>
       </div>
       <div class="footer" v-if="isLogin">XDJcc</div>
     </div>

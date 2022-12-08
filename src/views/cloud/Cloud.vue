@@ -74,12 +74,11 @@ const changeMusic = (id: number): void => {
             ref="searchInput"
         ></el-input>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="4">
         <el-button type="primary" @click="searchClick">搜索</el-button>
         <el-button type="primary" @click="resetSearch">重置</el-button>
       </el-col>
     </el-row>
-
     <div class="music_list">
       <el-scrollbar>
         <MusicList :list="songsList" @playMusic="changeMusic"></MusicList>

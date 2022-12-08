@@ -9,7 +9,7 @@ import store from "@/store/index";
 
 const actions = {
     mockLogin({commit}) {
-        UserApi.mockLogin(
+        UserApi.mockLogin<{ token: string }>(
             {
                 username: "admin",
                 password: "yt@123456",
@@ -21,7 +21,7 @@ const actions = {
         })
     },
     mockLoginOut({commit}) {
-        UserApi.mockLoginOut().then(res => {
+        UserApi.mockLoginOut<{ token: string }>().then(res => {
             store.dispatch('removeToken', res.token).then(r => '');
         })
     },

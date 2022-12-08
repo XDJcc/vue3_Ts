@@ -14,16 +14,16 @@ export default class UserApi {
     /*
      * login 登陆获取token存储到本地缓存
      * */
-    static async mockLogin(data) {
-        return await http.reqPost(`/system-api/login`, data);
+    static async mockLogin<T>(data) {
+        return await http.reqPost<T>(`/system-api/login`, data);
     }
 
     /*
      * loginout  退出登陆
      * */
 
-    static async mockLoginOut() {
-        return await http.reqPost(`/system-api/logout`);
+    static async mockLoginOut<T>() {
+        return await http.reqPost<T>(`/system-api/logout`);
     }
 
     /*

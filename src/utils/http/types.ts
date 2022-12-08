@@ -23,5 +23,5 @@ export interface Request {
         url: string,
         params?: Record<string, any>,
         config?: AxiosRequestConfig
-    ): Promise<CustomSuccessData<T>>;
+    ): Promise<T>;
 }

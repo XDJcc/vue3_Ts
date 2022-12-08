@@ -19,7 +19,6 @@ import store from "@/store";
 const message = (msg: string, type?: string) => {
     ElMessage({
         message: msg,
-        type: type || "warning",
         duration: 1500,
     });
 };
