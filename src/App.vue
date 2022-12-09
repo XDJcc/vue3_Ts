@@ -67,7 +67,7 @@ watchEffect(() => {
     <div :class="[{ is_login: isLogin }, 'view']">
       <div :class="[isLogin ? 'router_view' : '_router']" >
         <router-view v-slot="{Component}" v-if="$refreshRouterViewType">
-          <keep-alive>
+          <keep-alive :include="'Score'">
             <component :is="Component" v-if="true" :key="$route.name" ></component>
           </keep-alive>
         </router-view>

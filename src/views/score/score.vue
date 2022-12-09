@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import GameControl from "@/views/score/index";
-import { inject, nextTick, onMounted } from "vue";
+import {inject, nextTick, onMounted} from "vue";
 
 onMounted(() => {
   init();
 });
-let gameProto: unknown = null;
+let gameProto: GameControl;
 
 const init = async (): Promise<void> => {
   await nextTick();
