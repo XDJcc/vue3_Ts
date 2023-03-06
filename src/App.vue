@@ -59,10 +59,10 @@ watchEffect(() => {
 </script>
 
 <template>
-  <el-affix :offset="20" v-show="showHome" class="goHome">
-    <el-button type="primary" @click="goHome">{{ userWeight }}</el-button>
-  </el-affix>
   <div class="app">
+    <el-affix :offset="0" position="top" v-show="showHome" class="goHome">
+      <el-button type="primary" @click="goHome">{{ userWeight }}</el-button>
+    </el-affix>
     <Home class="nav_List" v-if="isLogin"></Home>
     <div :class="[{ is_login: isLogin }, 'view']">
       <div :class="[isLogin ? 'router_view' : '_router']" >

@@ -41,9 +41,12 @@ const activeMenu = computed((): string => {
         </el-sub-menu>
 
         <el-sub-menu index="3">
-          <template #title>Gluttonous Snake</template>
+          <template #title>Funny Games</template>
           <el-menu-item index="/score">
             <span>贪吃蛇</span>
+          </el-menu-item>
+          <el-menu-item index="/runBall">
+            <span>跑动的小球</span>
           </el-menu-item>
         </el-sub-menu>
 

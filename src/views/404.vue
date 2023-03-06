@@ -1,10 +1,14 @@
 <template>
   <div class="container">
-    <h1>哎呀，找不到页面啦！
-    </h1>
-    <h5>
-      <router-link to="/">回去吧</router-link>
-    </h5>
+    <div>
+      <h1>哎呀，找不到页面啦！
+      </h1>
+    </div>
+    <div>
+        <h5>
+        <router-link to="/">回去吧</router-link>
+      </h5>
+    </div>
   </div>
 </template>
 
@@ -16,9 +20,10 @@ export default {
 
 <style scoped>
 .container {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }

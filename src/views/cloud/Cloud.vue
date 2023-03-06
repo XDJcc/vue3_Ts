@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {CloudApi} from "@/api/cloudMusic";
-import {ref} from "vue";
+import {nextTick, ref} from "vue";
 import {Songs} from "@/api/cloudMusic/types";
 import MusicList from "./components/MusicList.vue";
 import PlayDetail from "./components/PlayDetail.vue";
-import {ElMessage} from "element-plus";
+import {ElLoading, ElMessage} from "element-plus";
 
 const keywords = ref<string>(""); //关键字
 const musicUrl = ref<string>(""); //播放音乐的Url
@@ -13,6 +13,8 @@ const selectMusicId = ref<number>(null);
 const isRequest = ref<boolean>(true);
 //搜索事件
 const searchClick = async () => {
+  const loadingInstance = ElLoading.service({})
+
   if (!isRequest.value) {
     ElMessage('稍等一会儿')
     return;
