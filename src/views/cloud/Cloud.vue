@@ -13,8 +13,7 @@ const selectMusicId = ref<number>(null);
 const isRequest = ref<boolean>(true);
 //搜索事件
 const searchClick = async () => {
-  const loadingInstance = ElLoading.service({})
-
+  // const loadingInstance = ElLoading.service({})
   if (!isRequest.value) {
     ElMessage('稍等一会儿')
     return;
@@ -32,6 +31,7 @@ const searchClick = async () => {
     songsList.value = result.songs;
     selectMusic(musicId);
   }
+  // loadingInstance.close();
   // const res = await getMusicUrl({ id: musicId });  // 接口需要验证 好像需要登录才能用
   // console.log(res, "aaaaaaaaa");
 };

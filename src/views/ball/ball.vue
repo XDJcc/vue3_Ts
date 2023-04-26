@@ -5,8 +5,6 @@ import Ball, {random, randomColor} from "@/views/ball/ball.ts";
 const wrapper = ref<HTMLElement>(null);
 const canvas = ref<HTMLCanvasElement>(null);
 
-const isStop = ref(false)
-
 onMounted(() => {
   const ctx: CanvasRenderingContext2D = canvas.value.getContext('2d',);
   console.log(wrapper.value.clientWidth);
@@ -30,7 +28,7 @@ onMounted(() => {
         size,
         ctx,
         width,
-        height
+        height,
     );
     balls.push(ball);
   }
@@ -42,21 +40,18 @@ onMounted(() => {
       balls[i].draw(ctx);
       balls[i].update();
     }
-      requestAnimationFrame(loop);
+    requestAnimationFrame(loop);
   }
   loop();
 })
 
 
-const changeType = (val: boolean) => {
-  isStop.value = val
-}
 
 </script>
 
 <template>
-  <div style="width:100%;height: 100%" ref="wrapper" >
-    <canvas ref="canvas" ></canvas>
+  <div style="width:100%;height: 100%;" ref="wrapper">
+    <canvas ref="canvas"></canvas>
   </div>
 </template>
 
