@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {CloudApi} from "@/api/cloudMusic";
-import {nextTick, ref} from "vue";
-import {Songs} from "@/api/cloudMusic/types";
+import { CloudApi } from "@/api/cloudMusic";
+import { nextTick, ref } from "vue";
+import { Songs } from "@/api/cloudMusic/types";
 import MusicList from "./components/MusicList.vue";
 import PlayDetail from "./components/PlayDetail.vue";
-import {ElLoading, ElMessage} from "element-plus";
+import { ElLoading, ElMessage } from "element-plus";
 
 const keywords = ref<string>(""); //关键字
 const musicUrl = ref<string>(""); //播放音乐的Url
@@ -13,31 +13,33 @@ const selectMusicId = ref<number>(null);
 const isRequest = ref<boolean>(true);
 //搜索事件
 const searchClick = async () => {
-  // const loadingInstance = ElLoading.service({})
+  const loadingInstance = ElLoading.service({
+    background: "transparent",
+  });
   if (!isRequest.value) {
-    ElMessage('稍等一会儿')
+    ElMessage("稍等一会儿");
     return;
   }
   isRequest.value = false;
   setTimeout(() => {
     isRequest.value = true;
-  }, 5000)
-  const {result, code} = await CloudApi.searchMusic({
+  }, 5000);
+  const { result, code } = await CloudApi.searchMusic({
     keywords: keywords.value,
   });
   if (result && code == 200) {
     const musicId: number = result.songs[0].id;
     console.log("获取的歌曲列表", result);
     songsList.value = result.songs;
-    selectMusic(musicId);
+    await selectMusic(musicId);
   }
-  // loadingInstance.close();
+  loadingInstance.close();
   // const res = await getMusicUrl({ id: musicId });  // 接口需要验证 好像需要登录才能用
   // console.log(res, "aaaaaaaaa");
 };
 
 //生成当前播放的音乐路径 更新ID
-const selectMusic = (musicId) => {
+const selectMusic = async (musicId: number): Promise<void> => {
   selectMusicId.value = musicId;
   musicUrl.value = `https://music.163.com/song/media/outer/url?id=${musicId}.mp3`;
 };
@@ -60,20 +62,19 @@ const changeMusic = (id: number): void => {
   selectMusicId.value = id;
   musicUrl.value = `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
 };
-
 </script>
 <template>
   <div class="main">
     <el-row :gutter="20">
       <el-col :span="8">
         <el-input
-            type="primary"
-            v-model="keywords"
-            clearable
-            placeholder="请输入关键字搜索音乐"
-            @keyup.enter="searchClick"
-            @clear="clearSearch"
-            ref="searchInput"
+          type="primary"
+          v-model="keywords"
+          clearable
+          placeholder="请输入关键字搜索音乐"
+          @keyup.enter="searchClick"
+          @clear="clearSearch"
+          ref="searchInput"
         ></el-input>
       </el-col>
       <el-col :span="4">
