@@ -1,20 +1,20 @@
 <template>
   <div class="splitpanes-container">
-    <el-card shadow="hover" header="splitpanes 窗格拆分器">
+    <el-card header="splitpanes 窗格拆分器" shadow="hover">
       <el-alert
+        :closable="false"
+        effect="dark"
         title="感谢优秀的 `splitpanes`，项目地址：https://github.com/antoniandre/splitpanes"
         type="warning"
-        effect="dark"
-        :closable="false"
       ></el-alert>
       <splitpanes
         class="default-theme"
-        @resize="paneSize = $event[0].size"
         style="height: 500px"
+        @resize="paneSize = $event[0].size"
       >
         <pane :size="32"> 1</pane>
         <pane :size="36">
-          <splitpanes class="default-theme" :horizontal="true">
+          <splitpanes :horizontal="true" class="default-theme">
             <pane :size="100"> 2</pane>
             <pane :size="100"> 3</pane>
           </splitpanes>
@@ -26,8 +26,8 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive } from "vue";
-import { Splitpanes, Pane } from "splitpanes";
+import { reactive, toRefs } from "vue";
+import { Pane, Splitpanes } from "splitpanes";
 import "splitpanes/dist/splitpanes.css";
 
 export default {
@@ -44,7 +44,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .splitpanes__pane {
   justify-content: center;
   align-items: center;

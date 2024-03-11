@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import GameControl from "@/views/score/index";
-import {inject, nextTick, onMounted} from "vue";
+import { inject, nextTick, onMounted } from "vue";
 
 onMounted(() => {
   init();
@@ -26,7 +26,6 @@ const openNewGame = (): void => {
       <el-col :span="1">
         <el-button type="primary" @click="openNewGame">重新开始</el-button>
       </el-col>
-
     </el-row>
     <!--创建游戏的主容器-->
     <div class="main">
@@ -47,7 +46,7 @@ const openNewGame = (): void => {
         <div id="levelEle">Level:1</div>
       </div>
     </div>
-    <el-card style="width: 300px;margin:  10px auto;text-align: center">
+    <el-card style="width: 300px; margin: 10px auto; text-align: center">
       上下左右键开始 任意键暂停
     </el-card>
   </div>
